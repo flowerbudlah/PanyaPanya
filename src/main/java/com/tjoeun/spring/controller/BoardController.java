@@ -38,7 +38,7 @@ public class BoardController {
 	@Lazy
 	private MemberDTO loginMemberDTO;
 	
-	//ê²Œì‹œ?Œ ë©”ì¸?™”ë©?
+	//ê²Œì‹œ?ï¿½ï¿½ ë©”ì¸?ï¿½ï¿½ï¿½?
 	@GetMapping("/main")
 	public String main(@RequestParam("board_idx") int board_idx, @RequestParam(value="page", defaultValue="1") int page, Model model) {
 		model.addAttribute("board_idx",board_idx);
@@ -48,7 +48,7 @@ public class BoardController {
 		List<PostDTO> postList = boardService.getPostList(board_idx, page);
 		model.addAttribute("postList", postList);
 				
-		//?˜?´ì§?
+		//?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 		PageDTO pageDTO = boardService.getPostCnt(board_idx, page); 
 		model.addAttribute("pageDTO", pageDTO);
 		model.addAttribute("page", page);
@@ -56,7 +56,7 @@ public class BoardController {
 		return "board/main";
 	}
 		
-	//ê¸??½ê¸?
+	//ï¿½??ï¿½ï¿½ï¿½?
 	@GetMapping("/read")
 	public String read(
 	@RequestParam("board_idx") int board_idx,
@@ -64,7 +64,7 @@ public class BoardController {
 	@RequestParam("page") int page,
 	@ModelAttribute("readPostDTO") PostDTO postDTO, Model model) {
 		
-		boardService.viewCount(postDTO.getPost_idx()); //ì¡°íšŒ?ˆ˜ ì¦ê? 
+		boardService.viewCount(postDTO.getPost_idx()); //ì¡°íšŒ?ï¿½ï¿½ ì¦ï¿½? 
 		PostDTO readPostDTO = boardService.getPostInfo(post_idx);
 		
 		model.addAttribute("readPostDTO", readPostDTO);
@@ -74,58 +74,52 @@ public class BoardController {
 		model.addAttribute("loginMemberDTO", loginMemberDTO);
 		model.addAttribute("page", page);
 		
-		//?Œ“ê¸?ì¶œë ¥ 
 		List<ReplyDTO> reply = null;
 		reply = replyService.list(post_idx);
 		model.addAttribute("reply", reply); 
-		//?´ ë¦¬í”Œ?? board/read ?˜?´ì§??—?„œ ë°˜ë³µë¬¸ì—?„œ?˜ ê·¸ê²ƒ
-			return "board/read";
+		
+		return "board/read";
 	}
 	
-	//ê¸??“°ê¸?
 	@GetMapping("/write")
-	public String write(		// parameterë¡? ?“¤?–´?˜¤?Š” board_idx ê°’ì„ writePostDTO ?— ?„£?–´ì¤?
-			@ModelAttribute("writePostDTO") PostDTO writePostDTO, 
-			@RequestParam("board_idx") int board_idx) {
-		
-			writePostDTO.setPost_board_idx(board_idx);
-			
-			return "board/write";
+	public String write(@ModelAttribute("writePostDTO") PostDTO writePostDTO, @RequestParam("board_idx") int board_idx) {
+		writePostDTO.setPost_board_idx(board_idx);
+		return "board/write";
 	}
 	
 	@PostMapping("/write_proc")
 	public String writeProc
-	(@Valid @ModelAttribute("writePostDTO") PostDTO writePostDTO, 
-	BindingResult result, MultipartFile file) {
+	(@Valid @ModelAttribute("writePostDTO") PostDTO writePostDTO, BindingResult result, MultipartFile file) {
 		
 		if(result.hasErrors()) { 
 			return "board/write";
 		}
 		boardService.addPostInfo(writePostDTO);
-			return "board/write_success";
+			
+		return "board/write_success";
 	}
 	
-	//ê¸? ?ˆ˜? •?? ë³¸ì¸ë§? ?• ?ˆ˜ ?ˆ?„ë¡?
+
 	@GetMapping("/not_writer")
 	public String notWriter() {
 		return "board/not_writer";
 	}
 	
-	//?ˆ˜? •?•˜ê¸?
+	//?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 	@GetMapping("/modify")
 	public String modify(
 		@RequestParam("board_idx") int board_idx,
 		@RequestParam("post_idx") int post_idx, 
-		@ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, //?ˆ˜? •???ƒ ê·? ê¸?
+		@ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, //?ï¿½ï¿½?ï¿½ï¿½???ï¿½ï¿½ ï¿½? ï¿½?
 		@RequestParam("page") int page, Model model) {
 		
 		model.addAttribute("board_idx", board_idx);
 		model.addAttribute("post_idx", post_idx);
 		model.addAttribute("page", page);
 		
-		PostDTO fromDBPostDTO = boardService.getPostInfo(post_idx); //?ˆ˜? •?•˜ê³ ì ?•˜?Š” ê·? ê¸?! 
+		PostDTO fromDBPostDTO = boardService.getPostInfo(post_idx); //?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ê³ ì ?ï¿½ï¿½?ï¿½ï¿½ ï¿½? ï¿½?! 
 		
-		//?ˆ˜? •?•˜?Š” ê·? ê³¼ì •
+		//?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ï¿½? ê³¼ì •
 		modifyPostDTO.setPost_writer_name(fromDBPostDTO.getPost_writer_name()); 
 		modifyPostDTO.setPost_date(fromDBPostDTO.getPost_date());
 		modifyPostDTO.setPost_subject(fromDBPostDTO.getPost_subject());
@@ -156,7 +150,7 @@ public class BoardController {
 	
 	
 	
-	//ê¸??‚­? œ
+	//ï¿½??ï¿½ï¿½?ï¿½ï¿½
 	@GetMapping("/delete")
 	public String delete
 	(PostDTO deletePostDTO, 
@@ -170,7 +164,7 @@ public class BoardController {
 
 	
 	
-	//ê²Œì‹œë¬? ê²??ƒ‰
+	//ê²Œì‹œï¿½? ï¿½??ï¿½ï¿½
 	@GetMapping("/search_result")
 	private String getSearchList(
 		@RequestParam("post_board_idx") int board_idx, 
@@ -184,15 +178,15 @@ public class BoardController {
 		searchPostDTO.setType(type); 
 		searchPostDTO.setKeyword(keyword); 
 
-		//ê²??ƒ‰ê²°ê³¼ ?ˆ˜ 
+		//ï¿½??ï¿½ï¿½ê²°ê³¼ ?ï¿½ï¿½ 
 		int search_result_count = boardService.searchResultCount(searchPostDTO);
 		model.addAttribute("search_result_count", search_result_count);
 		
-		//ê²??ƒ‰ê²°ê³¼ ë¦¬ìŠ¤?Š¸ 
+		//ï¿½??ï¿½ï¿½ê²°ê³¼ ë¦¬ìŠ¤?ï¿½ï¿½ 
 		List<PostDTO> searchList = boardService.selectSearchList(searchPostDTO, page);
 		model.addAttribute("searchList", searchList);
 		
-		//?˜?´ì§?
+		//?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 		PageDTO pageDTO = boardService.searchListCount(searchPostDTO, page); 
 		model.addAttribute("board_idx", board_idx);
 		model.addAttribute("pageDTO", pageDTO);

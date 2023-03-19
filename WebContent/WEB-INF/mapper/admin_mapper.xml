@@ -6,29 +6,29 @@
 <mapper namespace="admin">
 	<!-- 가입한 모든 회원 목록 -->
 	<select id="getAllMember" resultType="com.tjoeun.spring.dto.MemberDTO">
-		select * from panya_member_table order by member_idx
+		select * 
+		from panya_member_table 
+		order by member_idx
    	</select>
    	
    	<!--결제내역 -->
    	<select id="getAllPayment" resultType="com.tjoeun.spring.dto.OrderDTO">
-		select * from order_table
+		select * 
+		from order_table
    	</select>
 	
 	<!-- 배송상황 변경하기 -->
 	<update id="changeDeliveryCircumstance" parameterType="com.tjoeun.spring.dto.OrderDTO">
-			UPDATE order_table
-			SET circumstance=#{circumstance} 
-			WHERE order_idx=#{order_idx}
+		UPDATE order_table
+		SET circumstance=#{circumstance} 
+		WHERE order_idx=#{order_idx}
 	</update>
-	
-	
 	
 	<!-- 회원검색 -->
 	<select id="resultSearchingMember" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
 	 	select *
 		from panya_member_table 
 		where 
-
 		<choose>
 			<when test="type!=null and type.equals('member_name')">
 			 	member_name like CONCAT('%',#{keyword},'%')
@@ -38,7 +38,6 @@
 			</when>
 		</choose>
 	</select>
-	
 	
 	<!-- 결과수 -->
 	<select id="numberOfResultSearchingMember" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="java.lang.Integer">

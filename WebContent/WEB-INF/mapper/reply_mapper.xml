@@ -7,27 +7,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 댓글 목록 가져오기 -->
 	<select id="replyList" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.ReplyDTO">
-	 <![CDATA[
 		select post_idx, reply_idx, replyer_id, p.member_name replyer_name, reply_content, regDate
 		from reply_table r, panya_member_table p
         where post_idx = #{post_idx} and r.replyer_id = p.member_id 
-	]]>
+	
 	</select>
 
 	<!-- 댓글 작성 -->
 	<insert id="replyWrite" parameterType="com.tjoeun.spring.dto.ReplyDTO">
-	 <![CDATA[
-		insert into reply_table(post_idx, replyer_id, reply_content, regdate)
-		values(#{post_idx}, #{replyer_id}, #{reply_content, jdbcType=VARCHAR}, sysdate)
-        ]]>
+
+		insert into reply_table(post_idx, replyer_id, reply_content, regDate)
+		values(#{post_idx}, #{replyer_id}, #{reply_content, jdbcType=VARCHAR}, now())
+    
 	</insert>
 
 	<!-- 댓글 삭제-->
 	<delete id="replyDelete" parameterType="java.lang.Integer">
-	<![CDATA[
-		delete from reply_table 
+
+		delete 
+		from reply_table 
 		where reply_idx = #{reply_idx} 
-        ]]>
+        
 	</delete>
 	
 

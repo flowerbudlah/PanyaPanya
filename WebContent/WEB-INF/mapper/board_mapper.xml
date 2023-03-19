@@ -23,17 +23,19 @@
   
 	<!--게시판 이름가져오기 -->
 	<select id="getBoardName" parameterType="java.lang.Integer" resultType="java.lang.String" >
-		SELECT BOARD_NAME FROM BOARD_TABLE WHERE BOARD_IDX=#{board_idx}
+		select board_name 
+		from board_table 
+		where board_idx=#{board_idx}
 	</select>
    
    
    <!-- 글 하나 읽기 -->
    <select id="getPostInfo" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
    
-     SELECT P.POST_BOARD_IDX, P.POST_IDX, M.MEMBER_NAME POST_WRITER_NAME, TO_CHAR(P.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE, P.POST_SUBJECT, P.POST_TEXT,
-     		P.POST_FILE, P.POST_WRITER_IDX, P.POST_READ_COUNT
-     FROM POST_TABLE P, PANYA_MEMBER_TABLE M
-     WHERE P.POST_WRITER_IDX = M.MEMBER_IDX AND P.POST_IDX = #{post_idx}
+     select p.post_board_idx, p.post_idx, m.member_name post_writer_name, p.post_date, p.post_subject, p.post_text,
+     		p.post_file, p.post_writer_idx, p.post_read_count
+     from post_table p, panya_member_table m
+     where p.post_writer_idx = m.member_idx and p.post_idx = #{post_idx}
    
    </select>
    
@@ -41,9 +43,9 @@
    <!-- 글 수정하기 -->
    <update id="modifyPostInfo" parameterType="com.tjoeun.spring.dto.PostDTO">
      
-       UPDATE POST_TABLE 
-       SET POST_SUBJECT=#{post_subject}, POST_TEXT=#{post_text}, POST_FILE=#{post_file, jdbcType=VARCHAR}
-       WHERE POST_IDX=#{post_idx}
+       update post_table 
+       set post_subject=#{post_subject}, post_text=#{post_text}, post_file=#{post_file}
+       where post_idx=#{post_idx}
  
    </update>
    
@@ -51,28 +53,34 @@
    <!-- 전체 게시글 수 가져오기 -->
    <select id="getPostCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
      
-       SELECT COUNT(*) FROM POST_TABLE WHERE POST_BOARD_IDX = #{post_board_idx}
+       select count(*) 
+       from post_table 
+       where post_board_idx = #{post_board_idx}
  
    </select>
    
    
 	<!-- 게시글 삭제 -->
 	<delete id="delete" parameterType="java.lang.Integer">
-		delete from POST_TABLE where POST_IDX = #{post_idx}
+		delete 
+		from post_table 
+		where post_idx = #{post_idx}
 	</delete>
 	
 
 	<!-- 댓글 삭제-->
 	<delete id="replyDelete" parameterType="java.lang.Integer">
-		delete from reply_table where POST_IDX = #{post_idx}
+		delete 
+		from reply_table 
+		where post_idx = #{post_idx}
 	</delete>
 	
 	<!-- 조회수 증가 -->
 	<update id="viewCount" parameterType="java.lang.Integer">
 	
-		UPDATE POST_TABLE 
-		SET post_read_count = post_read_count + 1 
-		WHERE post_idx = #{post_idx}
+		update post_table 
+		set post_read_count = post_read_count + 1 
+		where post_idx = #{post_idx}
 
 	</update>
 	

@@ -1,5 +1,7 @@
 package com.tjoeun.spring.dto;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +26,9 @@ public class PostDTO {
 	
 	private int post_board_idx; //?´ ê¸??´ ?†?•˜?Š” ê²Œì‹œ?Œë²ˆí˜¸. 1?´ë©? ê³µì??‚¬?•­, 2?´ë©? ê³ ê°?„¼?„°   
 	
-	private String post_date; //ê²Œì‹œ?¼(?‘?„±?‚ ì§?)
+	private Date post_date; 
+	
+
 	
 	private String post_file; // ?°?´?„°ë² ì´?Š¤?— ???¥?˜?–´?ˆ?Š” ?ŒŒ?¼?´ë¦„ì„ ???¥?•˜?Š” ë³??ˆ˜
 	private MultipartFile upload_file; // browserê°? ë³´ë‚´?Š” file dataë¥? ???¥?•˜?Š” ë³??ˆ˜

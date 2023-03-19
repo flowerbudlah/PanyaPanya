@@ -16,6 +16,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	var product_idx = $("#product_idx").val();
 	var member_id = $("#member_id").val();
 
@@ -47,15 +48,14 @@ $(document).ready(function() {
 	//장바구니에 넣기
 	$(".btn-cart").click(function(){
 			
-		if(member_id.length == 0){ alert('로그인을 해주셔야 합니다.'); return; }
+		if(member_id.length == 0){
+			alert('로그인을 해주셔야 합니다.'); return; 
+		}
 		
 		var product_idx = $("#product_idx").val();
 		var amount = $(".numBox").val();
 		      
-		var data = {
-		     product_idx : product_idx,
-		     amount : amount
-		     };
+		var data = { product_idx : product_idx, amount : amount };
 		
 		$.ajax({
 			type : "post",
@@ -70,7 +70,10 @@ $(document).ready(function() {
 				} else if (result.trim() == 'already_existed') {
 						alert("이미 카트에 등록된 상품입니다. 장바구니를 확인해주세요!");
 				}
-			}
+			}, 
+			error    : function(request, status, error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);	
+			} 
 		}); //아작스 끝
 	}); //장바구니 넣기 부분 
 		
@@ -109,41 +112,6 @@ function deleteBoardCallback(obj){
         }
     }
 }
-
-//5. 좋아요. 공감버튼
-function like(){
-	var product_idx = $("#product_idx").val();
-	var yn = confirm("이 상품을 추천하시겠습니까?");        
-	
-    if(yn){
-        
-        $.ajax({    
-         	url      : "${root}product/product_detail/like", , 
-            type     : "POST",    
-            data : { product_idx : product_idx },
-            dataType : "JSON",
-            success  : function(obj) {
-            	
-            	if(obj != null){        
-            		
-            		var result = obj.result;
-            		
-            		if(result == "SUCCESS"){
-            			location.reload();
-            			alert("추천하셨습니다. "); 
-            			return;
-            		} else {     
-            			alert("추천에 문제가생김");    
-            			return;
-            		}
-            	}
-            },           
-            error    : function(request, status, error) {
-            	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);	
-            }
-         });
-    } //yn 끝  
-}//Like의 끝
 </script>
 </head>
 <style>

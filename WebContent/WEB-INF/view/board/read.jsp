@@ -44,7 +44,10 @@ ul{list-style:none;}
           </div>
           <div class="form-group">
             <label for="post_date">작성날짜</label>
-            <input type="text" id="post_date" name="post_date" class="form-control" value="${readPostDTO.post_date }" disabled="disabled"/>
+<input type="text" id="post_date" name="post_date" class="form-control" value="${readPostDTO.post_date }" disabled="disabled"/>
+<input type="text" id="post_date" name="post_date" class="form-control" value="<fmt:formatDate value='${readPostDTO.post_date }' pattern='yyyy-MM-dd HH:mm:ss'/>" disabled="disabled"/>
+
+
           </div>
           <div class="form-group">
             <label for="post_subject">제목</label>
