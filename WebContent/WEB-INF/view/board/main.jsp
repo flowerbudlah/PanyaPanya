@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath }/" />
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +55,11 @@ h2{font-family: 'Single Day', cursive; }
 							</a>
 						</td>
 						<td class="text-center d-none d-md-table-cell">${postDTO.post_writer_name }</td>
-						<td class="text-center d-none d-md-table-cell">${postDTO.post_date}</td>
+						<td class="text-center d-none d-md-table-cell">
+						<fmt:formatDate value="${postDTO.post_date }" pattern="yyyy-MM-dd"/>
+						
+						
+						</td>
 						<td class="text-center d-none d-md-table-cell">${postDTO.post_read_count}</td>
 					</tr>
                   </c:forEach>

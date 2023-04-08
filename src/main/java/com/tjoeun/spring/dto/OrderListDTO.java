@@ -9,30 +9,30 @@ public class OrderListDTO {
 
 	private String order_idx;
 	
-	private String member_id; //ì£¼ë¬¸ê²°ì œ??˜ ?•„?´?”” 
-	private int paymentprice; //ë°°ì†¡ë¹?+ë¬¼í’ˆì´ê?ê²? = ê²°ì œê¸ˆì•¡
+	private String member_id; 
+	private int paymentPrice; 
 	
-	private String sender_name; //ë°œì†¡?¸?˜ ?´ë¦?
-	private String sender_address; //ë°œì†¡?¸?˜ ì£¼ì†Œ
-	private int sender_postcode; //ë°œì†¡?¸ ?š°?¸ë²ˆí˜¸
-	private String sender_tel; //ë°œì†¡?¸?˜ ? „?™”ë²ˆí˜¸ 
+	private String sender_name;
+	private String sender_address;
+	private int sender_postcode; 
+	private String sender_tel;  
 	
-	private String recipient_name; //?ˆ˜?‹ ?¸?˜ ?´ë¦?
-	private String recipient_address; //?ˆ˜?‹ ?¸?˜ ì£¼ì†Œ 
+	private String recipient_name; 
+	private String recipient_address;  
 	private int recipient_postcode; 	
 	private String recipient_tel; 
 	
-	private Date order_date; //ê²°ì œ?¼ 
+	private Date order_date;  
 	private String memo; 
 	private String payment_method; 
 	
 	private int order_detail_idx; 
-	private int product_idx; //?•´?‹¹ ë¬¼ê±´?˜ ?¸?±?Š¤
-	private int amount; //êµ¬ë§¤?ˆ˜?Ÿ‰
+	private int product_idx; 
+	private int amount; //êµ¬ë§¤ìˆ˜ëŸ‰
 	
-	private String product_name; //?ƒ?’ˆëª?
-	private int product_price; //?‹¨ê°?
-	private String product_img; //?‚¬ì§„ì´ë¦? .png
+	private String product_name; 
+	private int product_price; 
+	private String product_img; 
 	
 	
 	

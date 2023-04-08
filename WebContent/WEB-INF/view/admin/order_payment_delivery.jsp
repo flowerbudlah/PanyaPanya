@@ -45,11 +45,11 @@ td{text-align:center; border: 1px solid gray;}
 					<a href="${root }mypage/order/orderInfo_Details?order_idx=${allPaymentList.order_idx}">자세히 보기</a>
 				</td>
 				<td style="text-align: center;">
-					<fmt:formatNumber pattern="###,###,###" value="${allPaymentList.paymentprice-3000}"/>원
+					<fmt:formatNumber pattern="###,###,###" value="${allPaymentList.paymentPrice-3000}"/>원
 				</td>
 				<td style="text-align: center;">3,000원</td>
 				<td style="text-align: center;">
-					<fmt:formatNumber pattern="###,###,###" value="${allPaymentList.paymentprice}"/>원
+					<fmt:formatNumber pattern="###,###,###" value="${allPaymentList.paymentPrice}"/>원
 				</td>
 				<td style="text-align: center;">
 					<fmt:formatDate pattern="yyyy-MM-dd(E) HH:mm:ss" value="${allPaymentList.order_date}" />

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cart">
 	
@@ -22,11 +19,13 @@
 		
 	</select>
 
+
 	<!-- 장바구니에 넣기 -->
 	<insert id="addGoodsInCart" parameterType="com.tjoeun.spring.dto.CartDTO" >
 		insert into cart_table(member_id, product_idx, amount, regDate)
 						values(#{member_id}, #{product_idx}, #{amount}, now())
 	</insert>
+
 
 	<!--내 장바구니 목록 -->
 	<select id="getMyCart" resultType="com.tjoeun.spring.dto.CartDTO">
@@ -37,9 +36,9 @@
 			m.member_name AS member_name,
 			p.product_name AS product_name,
 			c.amount AS amount,
-			p.product_img product_img,
+			p.product_img as product_img,
 			p.product_price AS price,
-			p.product_price * c.amount totalPrice, 
+			p.product_price * c.amount as totalPrice, 
 			c.regdate AS regDate
 		from panya_member_table m, product_table p, cart_table c
 		where m.member_id = c.member_id and p.product_idx = c.product_idx and c.member_id = #{member_id}
@@ -61,7 +60,7 @@
 	 -->
 	<select id="sum" parameterType="java.lang.String" resultType="java.lang.Integer">
 		
-		select IFNULL(sum(p.product_price * c.amount),0) paymentPrice
+		select ifnull(sum(p.product_price * c.amount),0) as paymentPrice
 		from product_table p, cart_table c
 		where p.product_idx = c.product_idx AND c.member_id = #{member_id}
 	
@@ -78,7 +77,7 @@
 
 
 
-	<!-- 주문정보 -->
+	<!-- 결제하는 것 (paymentPrice 결제금액)  -->
 	<insert id="orderInfo" parameterType="com.tjoeun.spring.dto.OrderDTO">
 		insert into order_table 
 		values(#{order_idx}, #{member_id}, #{paymentPrice}, #{sender_name}, #{sender_address}, #{sender_postcode}, #{sender_tel}, #{recipient_name}, #{recipient_address}, #{recipient_postcode}, #{recipient_tel}, now(), #{memo, jdbcType=VARCHAR}, #{payment_method}, #{circumstance})
@@ -113,7 +112,7 @@
 	
 	<!-- 상품테이블, 결제테이블, 결제상품상세보기 테이블 합쳐서 -->
 	<select id="allInformationAboutOrder" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.OrderListDTO">
-		select o.order_idx, o.paymentprice, o.member_id, o.sender_name, o.sender_address, o.sender_postcode, o.sender_tel, o.recipient_name, o.recipient_address, o.recipient_postcode, o.recipient_tel, o.order_date, o.memo, o.payment_method, d.order_detail_idx, d.amount, g.product_name, g.product_price, g.product_img
+		select o.order_idx, o.paymentPrice, o.member_id, o.sender_name, o.sender_address, o.sender_postcode, o.sender_tel, o.recipient_name, o.recipient_address, o.recipient_postcode, o.recipient_tel, o.order_date, o.memo, o.payment_method, d.order_detail_idx, d.amount, g.product_name, g.product_price, g.product_img
 		from order_table o inner join order_detail_table d on o.order_idx = d.order_idx inner join product_table g on d.product_idx = g.product_idx
 		where o.order_idx=#{order_idx}
 	</select>

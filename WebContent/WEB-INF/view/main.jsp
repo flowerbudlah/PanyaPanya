@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <c:url var="root" value="/" />
 <!DOCTYPE html>
 <html lang="en">
@@ -90,6 +91,8 @@ thead{ background-color: #df4759 }
 					<tr>
 						<td class="text-center">${postDTO.post_idx }</td>
 						<td>
+						
+						
 						<a href='${root }board/read?board_idx=${boardNameList[0].board_idx }&post_idx=${postDTO.post_idx}&page=1'>${postDTO.post_subject }
 						<!-- 그림 첨부파일 업로드 한 경우 -->
 						<c:if test="${postDTO.post_file != null }">
@@ -101,7 +104,9 @@ thead{ background-color: #df4759 }
 						</a>
 						</td>
 						<td class="text-center">${postDTO.post_writer_name }</td> 
-						<td class="text-center">${postDTO.post_date }</td>
+						<td class="text-center">
+							<fmt:formatDate value="${postDTO.post_date }" pattern="yyyy-MM-dd" />
+						</td>
 						<td class="text-center">${postDTO.post_read_count }</td>
 					</tr>
 					</c:forEach>

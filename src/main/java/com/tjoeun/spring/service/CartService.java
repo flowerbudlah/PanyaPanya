@@ -33,7 +33,6 @@ public class CartService {
 	}
 	
 	
-	// ?��바구?�� 목록
 	public Map<String, List> getMyCart(String member_id) {
 		
 		Map<String, List> cartMap = new HashMap<String, List>();
@@ -50,39 +49,36 @@ public class CartService {
 	}
 	
 
-	//?��바구?��?��?��?��?�� �? 물건 ?��?�� �??���?
 	public void delete(int cart_idx) {
 		cartDAO.delete(cart_idx);
 	}
 
-	//?��바구?�� 금액?���?
+
+	//결제금액
 	public int sum(String member_id) {
 		return cartDAO.sum(member_id);
 	}
 	
-	//?��바구?��?��?��?��?�� 물건?�� ?��?���?�? 
+
 	public void updateAmount(CartDTO updateAmountCartDTO) {
 		cartDAO.updateAmount(updateAmountCartDTO); 
 	}
 	
-	//1.결제
-	//1) 주문?��?�� ?���?, ?��?��?�� ?��보입?��
+
 	public void orderInfo(OrderDTO newOrderDTO) {
 		cartDAO.orderInfo(newOrderDTO);
 	}
 	
 	
-	//2) 주문 ?��?��?���?(주문번호, ?��?��물품, ?��?��, )
 	public void orderInfoDetail(OrderDetailDTO newOrderDetailDTO) {
 		cartDAO.orderInfoDetail(newOrderDetailDTO); 
 	}
 	
-	//3) 카트비우�?
 	public void emptyMyCart(String member_id) {
 		cartDAO.emptyMyCart(member_id); 
 	}
 	
-	//4) ?��?��?��?��?�� 결제?���? 리스?��
+	
 	public List<OrderDTO> orderPaymentList(String member_id) {
 		
 		List<OrderDTO> orderPaymentList = cartDAO.orderPaymentList(member_id);
@@ -90,7 +86,7 @@ public class CartService {
 		if (orderPaymentList.size() == 0) {
 			return null;
 		}
-			return orderPaymentList; 
+		return orderPaymentList; 
 	}
 	
 	
@@ -98,8 +94,5 @@ public class CartService {
 		return cartDAO.allInformationAboutOrder(idAndOrderIdxOrderDTO);
 	}
 
-	
-	
-	
 	
 }

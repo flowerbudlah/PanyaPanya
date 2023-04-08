@@ -15,83 +15,68 @@ public class BoardDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	//ê¸??“°ê¸?
-	public void addPostInfo(PostDTO writePostDTO) {
-		sqlSessionTemplate.insert("board.addPostInfo", writePostDTO);
-	}
-	
-	//ê²Œì‹œ?Œ ?´ë¦? ê°?? ¸?˜¤ê¸?
-	public String getBoardName(int board_idx) {
-		String board_name = sqlSessionTemplate.selectOne("board.getBoardName", board_idx);
-			return board_name; 	
-	}
-	//ê²Œì‹œê¸? ? „ì²´ìˆ˜
-	public int getPostCnt(int post_board_idx) {
-		int postCnt = sqlSessionTemplate.selectOne("board.getPostCnt", post_board_idx);
-		return postCnt;
-	}
-	//? „ì²´ê²Œ?‹œë¬? ë¦¬ìŠ¤?Š¸ 
+	//ê²Œì‹œíŒ ë©”ì¸í™”ë©´ìœ¼ë¡œ 
 	public List<PostDTO> getPostList(int board_idx, RowBounds rowBounds){
 		List<PostDTO> postList = sqlSessionTemplate.selectList("board.getPostList", board_idx, rowBounds);
 		return postList;
 	}
 	
+	//ê¸€ì“°ê¸°
+	public void addPostInfo(PostDTO writePostDTO) {
+		sqlSessionTemplate.insert("board.addPostInfo", writePostDTO);
+	}
+	
+
+	public String getBoardName(int board_idx) {
+		String board_name = sqlSessionTemplate.selectOne("board.getBoardName", board_idx);
+		
+		return board_name; 	
+	}
+	
+
+	public int getPostCnt(int post_board_idx) {
+		int postCnt = sqlSessionTemplate.selectOne("board.getPostCnt", post_board_idx);
+		return postCnt;
+	}
 	
 	
-	//ê²??ƒ‰?•œ ê²Œì‹œë¬¼ì˜ ?ˆ˜ 
+
 	public int searchResultCount(PostDTO searchPostDTO) {
 		 int search_result_count = sqlSessionTemplate.selectOne("board.searchResultCount", searchPostDTO); 
 		 return search_result_count; 
 	}
-	//ê²Œì‹œë¬? ê²??ƒ‰ ê²°ê³¼ ë¦¬ìŠ¤?Š¸
+	
+
+	
 	public List<PostDTO> selectSearchList(PostDTO searchPostDTO, RowBounds rowBounds){
 		return sqlSessionTemplate.selectList("board.selectSearchList", searchPostDTO, rowBounds);
 	}
 
 	
-	
-	
-	
-	
-	
-	//ê¸? ?•˜?‚˜ ?½ê¸?
+
+
 	public PostDTO getPostInfo(int post_idx){
 		PostDTO readPostDTO = sqlSessionTemplate.selectOne("board.getPostInfo", post_idx);
 		return readPostDTO;
 	}
 	
-	//ê¸? ?ˆ˜? •
+	
+	//ê¸€ ìˆ˜ì •í•˜ê¸° 
 	public void modifyPostInfo(PostDTO modifyPostDTO) {
 		sqlSessionTemplate.update("board.modifyPostInfo", modifyPostDTO);
 	}
 	
-	//ê¸? ?‚­? œ
+
+	
 	public void delete(int post_idx){
 		sqlSessionTemplate.delete("board.replyDelete", post_idx); 
 		sqlSessionTemplate.delete("board.delete", post_idx);
 	}
 	
-	//ì¡°íšŒ?ˆ˜ ì¦ê?
+
 	public void viewCount(int post_idx) {
 		sqlSessionTemplate.update("board.viewCount", post_idx); 
 	}
 
 
-	
-
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

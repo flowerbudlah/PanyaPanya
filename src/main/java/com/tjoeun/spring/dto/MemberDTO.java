@@ -13,7 +13,7 @@ public class MemberDTO {
 	private int member_idx; 
 	
 	@Size(min=2, max=4)
-	@Pattern(regexp = "[ê°?-?£]*")
+	@Pattern(regexp = "[ê°€-í£]*")
 	private String member_name; 	
 	
 	@Size(min=2, max=20)
@@ -32,26 +32,26 @@ public class MemberDTO {
 	
 	private String member_tel; 	
 	private String member_address; 	
-	private int postcode; //?š°?¸ë²ˆí˜¸
+	private int postcode; 
 	
 	private String question; 
 	private String answer; 
 	
-	private Date registerDate; //ê°??…?¼
+	private Date registerDate; 
 	
 	private boolean inputMemberID;
 	private boolean inputMemberEmail;
 	
 	private boolean memberLogin;
 	
+	
 	public MemberDTO() {
 		this.inputMemberID = false;
 		this.inputMemberEmail = false; 
 	}
 	
-	private String keyword; //ê´?ë¦¬ì? „?š© ?˜?´ì§??—?„œ ?šŒ?›ê²??ƒ‰?‹œ ?•„?š”?•œ ê²? 
-	private String type; //ê´?ë¦¬ì? „?š© ?˜?´ì§??—?„œ ?šŒ?›ê²??ƒ‰?‹œ ?•„?š”?•œ ê²? 
+	
+	private String keyword; 
+	private String type;
 	
 }
-
-

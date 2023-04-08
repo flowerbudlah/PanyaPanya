@@ -29,42 +29,38 @@ ul{list-style:none;}
 <c:import url="/WEB-INF/view/include/top_menu.jsp" />
 <!-- 본문내용 -->
 <div class="container" style="margin-top:50px; margin-bottom:50px">
-  <div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-7">
-      <div class="card shadow-none">
-        <div class="card-body">
-        <div class="form-group">
-            <label for="post_idx">글번호</label>
-            <input type="text" id="post_idx" name="post_idx" class="form-control" value="${readPostDTO.post_idx}" disabled="disabled"/>
-		</div>
-          <div class="form-group">
-            <label for="post_writer_name">작성자</label>
-            <input type="text" id="post_writer_name" name="post_writer_name" class="form-control" value="${readPostDTO.post_writer_name}" disabled="disabled"/>
-          </div>
-          <div class="form-group">
-            <label for="post_date">작성날짜</label>
-<input type="text" id="post_date" name="post_date" class="form-control" value="${readPostDTO.post_date }" disabled="disabled"/>
-<input type="text" id="post_date" name="post_date" class="form-control" value="<fmt:formatDate value='${readPostDTO.post_date }' pattern='yyyy-MM-dd HH:mm:ss'/>" disabled="disabled"/>
-
-
-          </div>
-          <div class="form-group">
-            <label for="post_subject">제목</label>
-            <input type="text" id="post_subject" name="post_subject" class="form-control" value="${readPostDTO.post_subject }" disabled="disabled"/>
-          </div>      
-          <div class="form-group">
-            <label for="post_content">내용</label>
-            <textarea id="post_content" name="post_content" class="form-control" rows="20" style="resize:none" disabled="disabled">${readPostDTO.post_text }</textarea>
-          </div>
-          
-         <!-- 업로드한 파일이 있는 경우에만 실행하도록 함 -->
-		<c:if test="${readPostDTO.post_file != null }">
+<div class="row">
+<div class="col-sm-3"></div>
+<div class="col-sm-7">
+	<div class="card shadow-none">
+		<div class="card-body">
+			<div class="form-group">
+				<label for="post_idx">글번호</label>
+				<input type="text" id="post_idx" name="post_idx" class="form-control" value="${readPostDTO.post_idx}" disabled="disabled"/>
+			</div>
+			<div class="form-group">
+				<label for="post_writer_name">작성자</label>
+				<input type="text" id="post_writer_name" name="post_writer_name" class="form-control" value="${readPostDTO.post_writer_name}" disabled="disabled"/>
+			</div>
+			<div class="form-group">
+				<label for="post_date">작성날짜</label>
+				<input type="text" id="post_date" name="post_date" class="form-control" value="<fmt:formatDate value='${readPostDTO.post_date }' pattern='yyyy-MM-dd HH:mm:ss'/>" disabled="disabled"/>
+			</div>
+			<div class="form-group">
+				<label for="post_subject">제목</label>
+				<input type="text" id="post_subject" name="post_subject" class="form-control" value="${readPostDTO.post_subject }" disabled="disabled"/>
+			</div>      
+			<div class="form-group">
+				<label for="post_content">내용</label>
+				<textarea id="post_content" name="post_content" class="form-control" rows="20" style="resize:none" disabled="disabled">${readPostDTO.post_text }</textarea>
+			</div>
+			<!-- 업로드한 파일이 있는 경우에만 실행하도록 함 -->
+			<c:if test="${readPostDTO.post_file != null }">
           	<div class="form-group">
           		<label for="board_file" style="font-size:13px;">첨부 이미지</label>
           		<img src="${root }upload/${readPostDTO.post_file}" width=100%; height=350px;/>            
           	</div>
-		</c:if>
+          	</c:if>
 <hr/>
 <!-- 댓글시작 -->
 <!--댓글 목록불러오기 -->
@@ -77,7 +73,7 @@ ul{list-style:none;}
 			<div class="reply_date">댓글작성일시: <fmt:formatDate value="${reply.regdate}" pattern="yyyy-MM-dd hh:mm:ss" />
 			<!-- 댓글삭제버튼은 댓글작성자와 관리자만 볼 수 있게 처리 -->
 			<c:if test="${(loginMemberDTO.member_id eq reply.replyer_id) || (loginMemberDTO.member_id eq 'admin')}">
-			<a href="${root }board/reply/delete?board_idx=${board_idx }&post_idx=${post_idx }&reply_idx=${reply.reply_idx}" class="badge badge-pill badge-light" style="font-size:13px;">X</a>
+				<a href="${root }board/reply/delete?board_idx=${board_idx }&post_idx=${post_idx }&reply_idx=${reply.reply_idx}" class="badge badge-pill badge-light" style="font-size:13px;">X</a>
 			</c:if>
 			</div>
 			<textarea id="reply_content" name="reply_content" class="form-control" rows="3" style="resize:none" disabled="disabled">${reply.reply_content }</textarea>
@@ -112,17 +108,13 @@ ul{list-style:none;}
 	</div>
 </div>
 
-
-
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-3"></div>
-  </div>
+		</div>
+	</div>
+</div>
+<div class="col-sm-3"></div>
+</div>
 </div>
 <!-- 하단 정보 -->  
 <c:import url="/WEB-INF/view/include/bottom_info.jsp" />
 </body>
 </html>
-
-

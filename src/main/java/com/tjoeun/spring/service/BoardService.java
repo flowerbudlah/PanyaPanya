@@ -26,11 +26,9 @@ public class BoardService {
 	@Value("${path.load}")
 	private String path_load;
 	
-	// ?•œ ?˜?´ì§??‹¹ ë³´ì—¬ì£¼ëŠ” ê¸??˜ ê°œìˆ˜
 	@Value("${page.listcnt}")
 	private int page_listcnt;	
 	
-	// ?•œ ?˜?´ì§??‹¹ ë³´ì—¬ì£¼ëŠ” ?˜?´ì§? ë²„íŠ¼ ê°œìˆ˜
 	@Value("${page.paginationcnt}")
 	private int page_paginationcnt;	
 	
@@ -41,8 +39,17 @@ public class BoardService {
 	@Lazy
 	private MemberDTO loginMemberDTO;
 	
+	//ê²Œì‹œíŒ ë©”ì¸í™”ë©´ìœ¼ë¡œ ê°€ê¸°
+	public List<PostDTO> getPostList(int board_idx, int page){
+			                             // 10  
+		int start = (page - 1) * page_listcnt;
+		RowBounds rowBounds = new RowBounds(start, page_listcnt);
+			
+		List<PostDTO> postList = boardDAO.getPostList(board_idx, rowBounds);
+		return postList;
+	}
+		
 	
-	//ê²Œì‹œ?Œ ?´ë¯¸ì? ?ŒŒ?¼ ?—…ë¡œë“œ ê´?? ¨ 
 	private String saveUploadFile(MultipartFile upload_file) {
 		
 		String file_name = System.currentTimeMillis() + "_" + upload_file.getOriginalFilename();
@@ -57,59 +64,65 @@ public class BoardService {
 		return file_name;
 	}
 	
-	//ê¸??“°ê¸? 
-	public void addPostInfo(PostDTO writePostDTO) {   // parameterë¡? ? „?‹¬?˜?–´?˜¤?Š” data ?™•?¸?•˜ê¸?
+	//ê¸€ì“°ê¸°  
+	public void addPostInfo(PostDTO writePostDTO) { 
 		
 		MultipartFile upload_file = writePostDTO.getUpload_file();
 		
-		if(upload_file.getSize() > 0) {//?—…ë¡œë“œ?•œ ?ŒŒ?¼?´ ?ˆ?Š”ê²½ìš°
+		//ì—…ë¡œë“œ íŒŒì¼ì´ ìˆë‹¤ë©´, 
+		if(upload_file.getSize() > 0) {
 			String file_name = saveUploadFile(upload_file);
-				writePostDTO.setPost_file(file_name);
+			
+			writePostDTO.setPost_file(file_name);
 		}
 		
+		//ê¸€ì“´ì´ëŠ” ë¡œê·¸ì¸ì„ í•œ ì‚¬ëŒ
 		writePostDTO.setPost_writer_idx(loginMemberDTO.getMember_idx());
+		
+		//ê¸€ì“°ê¸°
 		boardDAO.addPostInfo(writePostDTO);
 		
 	}
 	
-	
-	
-	
-	//ê²Œì‹œ?Œ ?´ë¦? ê°?? ¸?˜¤ê¸? 
+	//ê¸€ ìˆ˜ì •í•˜ê¸°. 
+	public void modifyPostInfo(PostDTO modifyPostDTO) {
+			
+		MultipartFile upload_file = modifyPostDTO.getUpload_file();
+		
+		if(upload_file.getSize() > 0) {
+			String file_name = saveUploadFile(upload_file);
+			modifyPostDTO.setPost_file(file_name);
+		}
+		boardDAO.modifyPostInfo(modifyPostDTO);
+	}
+		
+
+	//ê²Œì‹œíŒ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
 	public String getBoardName(int board_idx) {
 		String board_name = boardDAO.getBoardName(board_idx);
-			return board_name;
+		return board_name;
 	}
 	
 	
-	// ?˜?´ì§? ?‘?—…?„ ê±°ì¹œ ê²Œì‹œ?Œ ë©”ì¸?™”ë©? ê·? ë¦¬ìŠ¤?Š¸! 
-	public List<PostDTO> getPostList(int board_idx, int page){
-		                             // 10  
-		int start = (page - 1) * page_listcnt;
-		RowBounds rowBounds = new RowBounds(start, page_listcnt);
-		
-		List<PostDTO> postList = boardDAO.getPostList(board_idx, rowBounds);
-			return postList;
-	}
 	
-	//ê²Œì‹œ?Œ ë©”ì¸ ?˜?´ì§?
+	//ê²Œì‹œ?ï¿½ï¿½ ë©”ì¸ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 	public PageDTO getPostCnt(int post_board_idx, int currentPage) {
 		
-		int postCnt = boardDAO.getPostCnt(post_board_idx); //? „ì²´ê²Œ?‹œê¸? ?ˆ˜ 
+		int postCnt = boardDAO.getPostCnt(post_board_idx); //?ï¿½ï¿½ì²´ê²Œ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ 
 		PageDTO pageDTO = new PageDTO(postCnt, currentPage, page_listcnt, page_paginationcnt);
 		
 		return pageDTO;
 	}
 	
 	
-	//ê²??ƒ‰?•œ ê²Œì‹œë¬¼ì˜ ?ˆ˜ 
+	//ï¿½??ï¿½ï¿½?ï¿½ï¿½ ê²Œì‹œë¬¼ì˜ ?ï¿½ï¿½ 
 	public int searchResultCount(PostDTO searchPostDTO) {
 		int search_result_count = boardDAO.searchResultCount(searchPostDTO);
 			return search_result_count; 
 	}
 	
 	
-	//?˜?´ì§? ?‘?—…?„ ì¶”ê??•œ ê²Œì‹œ?Œ ê²??ƒ‰ê´?? ¨ 
+	//?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ì¶”ï¿½??ï¿½ï¿½ ê²Œì‹œ?ï¿½ï¿½ ï¿½??ï¿½ï¿½ï¿½??ï¿½ï¿½ 
 	public List<PostDTO> selectSearchList(PostDTO searchPostDTO, int page){
 		
 		int start = (page - 1) * page_listcnt;
@@ -121,44 +134,29 @@ public class BoardService {
 	}
 	
 	
-	//ê²??ƒ‰ê²°ê³¼ê´?? ¨ ?˜?´ì§?
+	//ï¿½??ï¿½ï¿½ê²°ê³¼ï¿½??ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 	public PageDTO searchListCount(PostDTO searchPostDTO, int currentPage) {
 		
-		int search_result_count = boardDAO.searchResultCount(searchPostDTO); //ê²??ƒ‰?•´?„œ ?‚˜?˜¨ ê²Œì‹œê¸??˜ ?ˆ˜ 
+		int search_result_count = boardDAO.searchResultCount(searchPostDTO); //ï¿½??ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ê²Œì‹œï¿½??ï¿½ï¿½ ?ï¿½ï¿½ 
 		PageDTO pageDTO = new PageDTO(search_result_count, currentPage, page_listcnt, page_paginationcnt);
 			
 		return pageDTO;
 	}
 
 		
-	//ê¸? ?½ê¸?
+	//ï¿½? ?ï¿½ï¿½ï¿½?
 	public PostDTO getPostInfo(int post_idx){
 		PostDTO readPostDTO = boardDAO.getPostInfo(post_idx);
 			return readPostDTO;
 	}
 	
 	
-	//ê¸??ˆ˜? •
-	public void modifyPostInfo(PostDTO modifyPostDTO) {
-		
-		MultipartFile upload_file = modifyPostDTO.getUpload_file();
-		if(upload_file.getSize() > 0) {
-			String file_name = saveUploadFile(upload_file);
-			modifyPostDTO.setPost_file(file_name);
-		}
-		boardDAO.modifyPostInfo(modifyPostDTO);
-	}
-	
-	
-	
-	
-	
-	//ê¸??‚­? œ
+	//ï¿½??ï¿½ï¿½?ï¿½ï¿½
 	public void delete(int post_idx){
 		boardDAO.delete(post_idx);
 	}
 	
-	//ì¡°íšŒ?ˆ˜ ì¦ê?
+	//ì¡°íšŒ?ï¿½ï¿½ ì¦ï¿½?
 	public void viewCount(int post_idx) {
 		boardDAO.viewCount(post_idx);
 	}

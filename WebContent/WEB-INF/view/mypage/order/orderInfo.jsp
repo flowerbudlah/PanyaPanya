@@ -61,8 +61,8 @@ h4:active{color: gray;}
 			<tr>
 				<th>결제금액</th>
  				<td>
- 					<strong>총 <fmt:formatNumber pattern="###,###,###" value="${orderPaymentList.paymentprice }" />원</strong>
- 					(물품금액의 합계<fmt:formatNumber pattern="###,###,###" value="${orderPaymentList.paymentprice-3000 }" /> 원
+ 					<strong>총 <fmt:formatNumber pattern="###,###,###" value="${orderPaymentList.paymentPrice }" />원</strong>
+ 					(물품금액의 합계<fmt:formatNumber pattern="###,###,###" value="${orderPaymentList.paymentPrice-3000 }" /> 원
  					+ 배송비 3,000 원)
  				</td>
 			</tr>

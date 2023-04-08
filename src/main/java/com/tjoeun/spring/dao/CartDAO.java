@@ -26,23 +26,23 @@ public class CartDAO {
 		sqlSessionTemplate.insert("cart.addGoodsInCart", cartDTO);
 	}
 
-	//?��바구?�� 목록 
+
 	public List<CartDTO> getMyCart(String member_id) {	
 		return sqlSessionTemplate.selectList("cart.getMyCart", member_id);
 	}
 
 
-	//?��바구?�� ?��?��?�� ?��?�� ?��?��
+
 	public void delete(int cart_idx) {
 		sqlSessionTemplate.delete("cart.delete", cart_idx);
 	}
 	
-	//?��바구?�� ?���?
+	//결제금액 
 	public int sum(String member_id) {
 		return sqlSessionTemplate.selectOne("cart.sum", member_id);
 	}
 	
-	//?��바구?��?��?��?��?�� 물건?�� ?��?���?�? 
+
 	public void updateAmount(CartDTO updateAmountCartDTO) {
 		sqlSessionTemplate.update("cart.updateAmount", updateAmountCartDTO); 
 	}

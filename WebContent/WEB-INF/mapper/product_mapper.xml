@@ -42,12 +42,11 @@
    		where product_idx = #{product_idx} 
 	</delete>
 	
-	
 	<!-- 상품추천(좋아요기능) -->
 	<update id="like" parameterType="java.lang.Integer">
 		update product_table 
 		set likeButton = likeButton + 1 
-		where product = #{product_idx}
+		where product_idx = #{product_idx}
 	</update>
 	
 
@@ -62,7 +61,7 @@
 	<!-- 2) 댓글 작성 -->
 	<insert id="replyWrite" parameterType="com.tjoeun.spring.dto.ProductReplyDTO">
 		insert into product_reply_table(product_idx, product_replyer_id, product_reply_content, regDate)
-		values(#{product_idx}, #{product_replyer_id}, #{product_reply_content, jdbcType=VARCHAR}, now())
+								values(#{product_idx}, #{product_replyer_id}, #{product_reply_content, jdbcType=VARCHAR}, now())
 	</insert>
    
 	<!-- 3) 댓글 삭제 (아작스)-->
@@ -71,5 +70,8 @@
 		from product_reply_table 
 		where product_reply_idx = #{product_reply_idx}
 	</delete>
+	
+	
+	
 	
 </mapper>

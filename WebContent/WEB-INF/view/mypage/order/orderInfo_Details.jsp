@@ -74,14 +74,12 @@ td{width:700px; text-align: left; }
     		<th><span>총 결제금액: </span></th>
     		<td>
     		<span>
-    		<fmt:formatNumber pattern="###,###,###" value="${allInformationAboutOrder.paymentprice}"/>원
+    		<fmt:formatNumber pattern="###,###,###" value="${allInformationAboutOrder.paymentPrice}"/>원
     		&nbsp;&nbsp;(배송비 3,000원 포함)</span></td>
     	</tr>
     		<tr>
     		<th><span>주문자(${allInformationAboutOrder.member_id})의 메모: </span></th>
-    		<td style="color:red;">
-    			${allInformationAboutOrder.memo}
-    		</td>
+    		<td style="color:red;">${allInformationAboutOrder.memo}</td>
     	</tr>
     </table>
     </c:if>

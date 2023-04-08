@@ -24,24 +24,23 @@ function checkEmailInModify(){
 		alert('가입하실 Email를 입력해주세요!');
 		return; 
 	}
-    
-    $.ajax({
-      url: '${root}member/checkEmailInModify/'+member_email, 
-      type: 'get',
-      dataType: 'text',
-      success: 
-    	
-    	function(result){
-        	if(result.trim() == 'true'){
-          		alert('사용하실 수 있습니다. ');
-          		$('#inputMemberEmail').val('true');
-        	}else{ //result.trim() == 'false'
-        		alert('다른 Email을 이용해주세요.');  
-              	$('#inputMemberEmail').val('false');
-        	}
-          } //function 끝
-      	})//아작스끝
-    }//펑션 끝
+	
+	$.ajax({
+		url: '${root}member/checkEmailInModify/'+member_email, 
+		type: 'get',
+		dataType: 'text',
+		success: 
+			function(result){
+				if(result.trim() == 'true'){
+					alert('사용하실 수 있습니다. ');
+					$('#inputMemberEmail').val('true');
+				}else{ //result.trim() == 'false'
+					alert('다른 Email을 이용해주세요.');
+					$('#inputMemberEmail').val('false');
+				}
+			} //function 끝
+		})//아작스끝
+	}//펑션 끝
  
 function resetInputMemberEmail(){
 	$("#inputMemberEmail").val('false'); 
@@ -80,8 +79,6 @@ function resetInputMemberEmail(){
 						<form:errors path='member_pw2' style='color:red'/>
 					</div>
 					<%--이메일 --%>
-					
-					 ${loginMemberDTO.member_email }
 					<div class="form-group">
 						<form:label path="member_email">E-mail</form:label> 
 							<div class="input-group">

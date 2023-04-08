@@ -49,12 +49,18 @@ $(document).ready(function() {
 	$(".btn-cart").click(function(){
 			
 		if(member_id.length == 0){
-			alert('로그인을 해주셔야 합니다.'); return; 
+			alert('로그인을 해주셔야 합니다.'); 
+			return; 
 		}
 		
 		var product_idx = $("#product_idx").val();
 		var amount = $(".numBox").val();
-		      
+		
+		if(amount == 0){
+			alert('수량을 선택하시고, 장바구니에 넣기를 눌러주시면 됩니다.'); 
+			return; 
+		}
+		     
 		var data = { product_idx : product_idx, amount : amount };
 		
 		$.ajax({
@@ -82,7 +88,7 @@ $(document).ready(function() {
 //상품 댓글 삭제 아작스
 function deleteProductReply(){
 	var product_reply_idx = $("#product_reply_idx").val();
-	var yn = confirm("게시글을 삭제하시겠습니까?");        
+	var yn = confirm("댓글을 삭제하시겠습니까?");        
     if(yn){
         $.ajax({    
          	url      : "${root}product/product_detail/deleteProductReply", 
@@ -105,13 +111,52 @@ function deleteBoardCallback(obj){
         var result = obj.result;
         if(result == "SUCCESS"){  
         	history.go(0); //페이지 리프레쉬
-            alert("댓글 삭제를 성공하였습니다.");      
+            alert("댓글 삭제를 성공하였습니다.");    
+        	return; 
         } else {     
             alert("댓글 삭제를 실패하였습니다.");    
             return;
         }
     }
 }
+
+
+//5. 좋아요. 공감버튼
+function like(){
+	var product_idx = $("#product_idx").val();
+	var yn = confirm("이 글에 공감하시나요?");        
+	
+    if(yn){
+        			
+        $.ajax({    
+         	url      : "${root}product/product_detail/like", 
+            type     : "POST",    
+            data	 : { product_idx : product_idx },
+            dataType : "JSON",
+            success  : function(obj) {
+            	
+            	if(obj != null){        
+            		
+            		var result = obj.result;
+            		
+            		if(result == "success"){
+            			alert("공감하셨습니다.");
+            			 location.href = "${root}product/product_detail?product_idx=${product_idx}";
+            		
+            			return;
+            		} else {     
+            			alert("공감하는것에 문제가 생김");    
+            			return;
+            		}
+            	}
+            },           
+            error    : function(request, status, error) {
+            	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);	
+            }
+         });
+    } //yn 끝  
+}//Like의 끝
+
 </script>
 </head>
 <style>
@@ -131,7 +176,7 @@ ul{list-style:none;}
 <!-- 시작 -->
 <table class="entire">
 	<tr><!-- 상품 사진 출력 영역 -->
-		<td>
+		<td>	<!-- root = http://localhost:8090/PanyaPanya/      image/product/baguettes.png -->
 			<img src="${root }image/product/${productDetail.product_img}" width="500px" height="450px" alt="${productDetail.product_name}">
 		</td>
 		<td align="center">
@@ -189,7 +234,7 @@ ul{list-style:none;}
 <a href="${root }product/product_detail?product_idx=${product_idx}" onclick="javascript:like();">
 	<img src="${root }image/like.gif" width=100px;><br>이 상품을 <strong>추천</strong>하시겠습니까? 
 </a>
-<input type="hidden" id="product_idx" name="product_idx" value="${product_idx}"/> <!-- 게시글 번호 -->
+<!-- <input type="hidden" id="product_idx" name="product_idx" value="${product_idx}"/>  게시글 번호 -->
 <br>
 <strong>★${productDetail.likeButton }★</strong>
 <!-- 1. 댓글과 대댓글 -->

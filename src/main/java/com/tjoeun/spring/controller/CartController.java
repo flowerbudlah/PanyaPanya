@@ -52,15 +52,13 @@ public class CartController {
 		}
 	}
 	
-	
-	//?��바구?�� 목록
 	@RequestMapping(value = "/cart/cartlist/{member_id}", method = {RequestMethod.GET, RequestMethod.POST})
 	public String myCart(@PathVariable("member_id") String member_id, Model model) {
 		
 		Map<String, List> cartMap = cartService.getMyCart(member_id);
 		model.addAttribute("cartMap", cartMap);
 		
-		//배송�? ?��?��?�� 결제금액
+		//베송비 포함하지 않은 결제금액 
 		int paymentMoney = cartService.sum(member_id); 
 		model.addAttribute("paymentMoney", paymentMoney); 
 		
@@ -68,7 +66,7 @@ public class CartController {
 	}
 	
 	
-	//?��바구?�� ?��?��?��?�� �? 물건 �??���?
+
 	@GetMapping("/cart/cartlist/delete")
 	public String delete(@RequestParam("cart_idx") int cart_idx, HttpSession session) {
 		cartService.delete(cart_idx); 
@@ -79,7 +77,7 @@ public class CartController {
 	}
 	
 	
-	//?��바구?�� ?��?��?��?�� �? 물건?�� ?��?��?�� �?경한?��. 
+
 	@PostMapping("/cart/cartlist/updateAmount")
 	public String updateAmount(@ModelAttribute("updateAmountCartDTO") CartDTO updateAmountCartDTO, HttpSession session) {
 		
@@ -96,7 +94,7 @@ public class CartController {
 		MemberDTO loginMemberDTO = (MemberDTO) session.getAttribute("loginMemberDTO");
 		String member_id = loginMemberDTO.getMember_id(); 
 		
-		//고유?�� 주문번호(order_idx)�? ?��?��?���? 만들�?
+
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
@@ -113,13 +111,13 @@ public class CartController {
 		newOrderDetailDTO.setMember_id(member_id); 
 		cartService.orderInfoDetail(newOrderDetailDTO);
 		
-		//마�?막으�? 결제?��료했?��?�� �? 결제?�� 물건?? ?��바구?��?��?�� ?��?��?��.(?��바구?�� 비우�?)
+		
 		cartService.emptyMyCart(member_id); 
 		return "redirect:/mypage/order/orderInfo"; 
 	}
 	
 	
-	//?��?��?��?�� 결제?��료된 주문목록 
+
 	@GetMapping("/order/orderInfo")
 	public String orderPaymentList(HttpSession session, Model model){
 		
@@ -133,8 +131,6 @@ public class CartController {
 	}
 	
 	
-
-	//결제�? ?��료�? ?��경우, ?��?��?�� �??�� ?��?��?��보도 ?��?��?��?�� 
 	@GetMapping("/order/orderInfo_Details")
 	public String getOrderList(HttpSession session, 
 		@RequestParam("order_idx") String order_idx, OrderDTO idAndOrderIdxOrderDTO, Model model){

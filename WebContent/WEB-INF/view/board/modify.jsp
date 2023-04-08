@@ -24,19 +24,21 @@
 			<div class="card shadow-none">
 				<div class="card-body">
                     <form:form action="${root }board/modify_proc" method="post" modelAttribute="modifyPostDTO" enctype="multipart/form-data">
+        			
         			<form:hidden path="post_idx" />    
         			<form:hidden path="post_board_idx" />  
                       <input type="hidden" name="page" value="${page }" > 
 					
 						<div class="form-group">
-							<form:label path="post_writer_name"  >작성자</form:label>
+							<form:label path="post_writer_name">작성자</form:label>
 							<form:input path="post_writer_name" class="form-control" readonly="true" />
 						</div>
-						
+						<!-- 문제가되는 날짜 
 						<div class="form-group">
 							<form:label path="post_date">작성날짜</form:label>
 							<form:input path="post_date" class="form-control" readonly="true" />
 						</div>
+						 -->
 						<div class="form-group">
 							<form:label path="post_subject">제목</form:label>
 							<form:input path="post_subject" class="form-control" />
@@ -47,14 +49,12 @@
 							<form:textarea path="post_text" class="form-control" rows="10" style="resize:none" />
                             <form:errors path="post_text"  style="color:red;"/>
 						</div>
-						
-						
 						<div class="form-group">
     						<label for="post_file">첨부 이미지</label>
-                            <c:if test="${modifyPostDTO.post_file != null }" > 
-    						  <img src="${root }upload/${modifyPostDTO.post_file}" width="100%"/>
-                              <form:hidden path="post_file" />
-                            </c:if>  
+    						<c:if test="${modifyPostDTO.post_file != null }" >
+    							<img src="${root }upload/${modifyPostDTO.post_file}" width="100%"/>
+    							<form:hidden path="post_file" />
+    						</c:if>  
 							<form:input path="upload_file" type="file" class="form-control" accept="image/*"/>					
 						</div>
 						
@@ -65,6 +65,7 @@
 								<a href="${root }board/read?board_idx=${board_idx}&post_idx=${post_idx}&page=${page}" class="btn btn-info">취소</a>
 							</div>
 						</div>
+						
 					</form:form>
 				</div>
 			</div>
@@ -75,8 +76,5 @@
 
 <!-- 하단 정보 -->  
 <c:import url="/WEB-INF/view/include/bottom_info.jsp" />
-
-
 </body>
 </html>
-

@@ -7,8 +7,8 @@ public class OrderDetailDTO {
 
 	private int order_detail_idx; 
 	private String order_idx; //ì£¼ë¬¸ë²ˆí˜¸ 
-	private int product_idx; //?•´?‹¹ ë¬¼ê±´?˜ ?¸?±?Š¤
-	private int amount; //êµ¬ë§¤?ˆ˜?Ÿ‰
+	private int product_idx; 
+	private int amount; 
 	private String member_id; 
 	
 }

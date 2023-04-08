@@ -8,17 +8,17 @@ import lombok.Data;
 @Data
 public class CartDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private int cart_idx;    //?¥ë°”êµ¬?‹ˆ ?¸?±?Š¤ 
-	private String member_id; //?¥ë°”êµ¬?‹ˆ ì£¼ì¸?˜ ?•„?´?””
-	private String member_name; //?¥ë°”êµ¬?‹ˆ ì£¼ì¸?˜ ?´ë¦?     
-	private int product_idx;    //?¥ë°”êµ¬?‹ˆ ?•ˆ?— ?ˆ?Š” ?ƒ?’ˆ?˜ ?¸?±?Š¤ 
-	private String product_name; //?¥ë°”êµ¬?‹ˆ?•ˆ?—?ˆ?Š” ?ƒ?’ˆ?˜ ?´ë¦?     
-	private int price; //?ƒ?’ˆ?‹¨ê°?
-	private int amount;//?ˆ˜?Ÿ‰
-	private int totalPrice;//ì´ì•¡ = ?‹¨ê°? x ?ˆ˜?Ÿ‰
+	private int cart_idx;    
+	private String member_id;
+	private String member_name;   
+	private int product_idx;    
+	private String product_name;      
+	private int price; 
+	private int amount;
+	private int totalPrice;
 	private String product_img; 
 	
-	private Date regdate; //ì¹´íŠ¸?— ?„£?? ?‚ ì§? 
+	private Date regdate; 
 
 	
 	public CartDTO() {
@@ -49,8 +49,8 @@ public class CartDTO implements Serializable{
 
 
 
-	public CartDTO(int cart_idx, String member_id, String member_name, int product_idx, String product_name, int price,
-			int amount, int totalPrice, Date regdate, String product_img) {
+	public CartDTO
+	(int cart_idx, String member_id, String member_name, int product_idx, String product_name, int price,int amount, int totalPrice, Date regdate, String product_img) {
 		super();
 		this.cart_idx = cart_idx;
 		this.member_id = member_id;
@@ -64,12 +64,5 @@ public class CartDTO implements Serializable{
 		this.product_img = product_img; 
 	}
 
-
-
-
-
-	
-	
-	
 	
 }

@@ -101,7 +101,9 @@ h5:active{color: gray;}
 				<c:when test="${cartList != null}"><%--장바구니에 물건이 들어있다. --%>	
 					<fmt:formatNumber value="${paymentMoney+3000}" pattern="###,###,###"/>
 				</c:when>
-				<c:otherwise>0</c:otherwise>
+				<c:otherwise>
+					0
+				</c:otherwise>
 			</c:choose>원
 			</div>
 		</th>
@@ -112,11 +114,7 @@ h5:active{color: gray;}
 <input type="hidden" name="member_id" value="${loginMemberDTO.member_id }"/>
 <tbody>
 	<tr class="sender">
-		<td colspan="2">
-		
-		
-			<input type="hidden" name="paymentprice" value="${paymentMoney+3000}"/><%--배송비 포함한 결제금액 --%>
-		</td>
+		<td colspan="2"><input type="hidden" name="paymentPrice" id="paymentPrice" value="${paymentMoney+3000}"/></td>
 		<td colspan="2">발송인의 이름: </td>
 		<td colspan="3">
 			<input type="text" style="width:150px;" name="sender_name" id="sender_name" required="required"/>

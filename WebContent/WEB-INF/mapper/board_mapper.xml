@@ -4,20 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="board">
+
 	<!-- 게시판 글 목록 가져오기(댓글 달린수 제목 옆에 붙이기) -->
 	<select id="getPostList" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
 		select p.post_board_idx, p.post_idx, p.post_subject, m.member_name post_writer_name, p.post_date, p.post_read_count, 
       		(select count(*) from reply_table where post_idx = p.post_idx) as reply_cnt, p.post_file
-      from post_table p, panya_member_table m
-      where p.post_writer_idx = m.member_idx and p.post_board_idx = #{board_idx} 
-      order by p.post_idx desc 
+      	from post_table p, panya_member_table m
+      	where p.post_writer_idx = m.member_idx and p.post_board_idx = #{board_idx} 
+      	order by p.post_idx desc 
    </select>
 
 
 	<!-- 글쓰기 -->
-	<insert id="addPostInfo" parameterType="com.tjoeun.spring.dto.PostDTO"   >
-		insert into post_table(post_subject, post_text, post_file, post_writer_idx, post_board_idx, post_date, post_read_count)
-		values(#{post_subject}, #{post_text}, #{post_file}, #{post_writer_idx}, #{post_board_idx}, now(), #{post_read_count})
+	<insert id="addPostInfo" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="post_idx">
+		insert into post_table
+		(post_subject, post_text, post_file, post_writer_idx, post_board_idx, post_date, post_read_count)
+	values(#{post_subject}, #{post_text}, #{post_file}, #{post_writer_idx}, #{post_board_idx}, now(), #{post_read_count})
 	</insert>
   
   
@@ -40,18 +42,17 @@
    </select>
    
    
-   <!-- 글 수정하기 -->
-   <update id="modifyPostInfo" parameterType="com.tjoeun.spring.dto.PostDTO">
-     
-       update post_table 
-       set post_subject=#{post_subject}, post_text=#{post_text}, post_file=#{post_file}
-       where post_idx=#{post_idx}
- 
+   
+	<!-- 글 수정하기 -->
+	<update id="modifyPostInfo" parameterType="com.tjoeun.spring.dto.PostDTO">
+		update post_table 
+set post_subject=#{post_subject}, post_text=#{post_text}, post_file=#{post_file, jdbcType=VARCHAR}
+		where post_idx=#{post_idx}
    </update>
    
    
-   <!-- 전체 게시글 수 가져오기 -->
-   <select id="getPostCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	<!-- 전체 게시글 수 가져오기 -->
+	<select id="getPostCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
      
        select count(*) 
        from post_table 
