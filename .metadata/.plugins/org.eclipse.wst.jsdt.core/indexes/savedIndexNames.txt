@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\Workspace\PanyaPanya\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2845719768.index
+2185791434.index
+85287093.index
+2487224227.index
+3800661857.index
+2021988559.index
+1535744721.index
