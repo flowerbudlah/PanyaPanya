@@ -1,8 +1,7 @@
-# OpenJDK 8 사용
-FROM openjdk:8-jdk-alpine
+FROM tomcat:9-jdk17
 
-# WAR 파일 복사
-COPY target/PanyaPanya-0.0.1-SNAPSHOT.war /app.war
+# 기존 WAR 삭제
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-# 실행 명령어
-CMD ["java", "-jar", "/app.war"]
+# 당신의 WAR 복사 (ROOT로 덮기)
+COPY target/PanyaPanya-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
