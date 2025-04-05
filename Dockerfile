@@ -1,5 +1,5 @@
-# OpenJDK 17 사용
-FROM openjdk:17
+# OpenJDK 8 사용
+FROM openjdk:8-jdk-alpine
 
 # WAR 파일 복사
 COPY target/PanyaPanya-0.0.1-SNAPSHOT.war /app.war
