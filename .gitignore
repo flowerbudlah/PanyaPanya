@@ -1,2 +1,5 @@
 /build/
+!target/
+!target/**
+!target/PanyaPanya-0.0.1-SNAPSHOT.war
 /target/

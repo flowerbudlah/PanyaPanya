@@ -7,6 +7,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<build>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+        </resource>
+    </resources>
+
 	<plugins>
 		<plugin>
 			<artifactId>maven-compiler-plugin</artifactId>
@@ -21,11 +27,32 @@
 			<artifactId>maven-war-plugin</artifactId>
 			<version>3.3.2</version>
 			<configuration>
-				<warSourceDirectory>webapp</warSourceDirectory>
-				<failOnMissingWebXml>false</failOnMissingWebXml>
+		
+    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+    <failOnMissingWebXml>false</failOnMissingWebXml>
+
+			
+		
+				
+				 <webResources>
+                    <resource>
+                        <directory>src/main/webapp</directory>
+                        <targetPath>/</targetPath>
+                        <includes>
+                            <include>**/*.jsp</include>
+                        </includes>
+                    </resource>
+                </webResources>
+				
+				
+				
+				
             </configuration>
 		</plugin>
 	</plugins>
+	
+
+		
 	</build>
 	<!-- library 버전 관리 -->
 	<properties>
