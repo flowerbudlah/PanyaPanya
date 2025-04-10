@@ -26,7 +26,6 @@ public class PostDTO {
 	private int post_board_idx;
 
 	private Date post_date; // 글 작성일
-	private String string_post_date;
 
 	private String post_file;
 	private MultipartFile upload_file;

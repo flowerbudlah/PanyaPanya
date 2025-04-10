@@ -27,7 +27,7 @@ public class RestAPIController {
 		return chck + "";
 	}
 
-	// 3. 이메일 중복체크
+	// 3. 회원정보 수정페이지에서 이메일 중복체크
 	@GetMapping("/member/checkEmailInModify/{member_email}")
 	public String checkEmailInModify(@PathVariable String member_email) {
 		boolean chck = memberService.checkEmailInModify(member_email);

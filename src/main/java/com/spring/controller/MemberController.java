@@ -47,9 +47,11 @@ public class MemberController {
 
 		if (result.hasErrors()) {
 			return "member/join";
+
 		} else {
 			memberService.addMemberInfo(joinMemberDTO);
 			return "member/join_success";
+
 		}
 	}
 
@@ -105,14 +107,15 @@ public class MemberController {
 
 	// 3. 2) 회원정보 수정 버튼 누르기
 	@PostMapping("/modify_proc")
-	public String modifyProc(@Valid @ModelAttribute("modifyMemberDTO") MemberDTO modifyMemberDTO,
-			BindingResult result) {
+	public String modifyProc(@Valid @ModelAttribute("modifyMemberDTO") MemberDTO modifyMemberDTO, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "member/modify";
+
 		} else {
 			memberService.modifyMemberInfo(modifyMemberDTO);
 			return "member/modify_success";
+
 		}
 
 	}
@@ -132,7 +135,7 @@ public class MemberController {
 		return "/member/find_id";
 	}
 
-	// 비번찾기 첫단�? 질문(question)�? member_id �??��?���?
+
 	@RequestMapping(value = "/find_password_question")
 	public String find_password_question() {
 		return "/member/find_password_question";
@@ -146,13 +149,13 @@ public class MemberController {
 		return "/member/find_password_answer";
 	}
 
-	// 비번찾기 ?��?��?�� 질문?�� ???�� ?��?�� ?���? 본인?�� ?��?��?���? 보내�?
+
 	@RequestMapping(value = "/find_password", method = RequestMethod.POST)
 	public String find_password(MemberDTO answerAndId, Model model) {
 
 		MemberDTO password = memberService.find_password(answerAndId);
 
-		if (password == null) { // ?���? ?��?��?���? ?��?���?�? ?��?��결과�? ?��?��.
+		if (password == null) {
 			model.addAttribute("check", 1);
 		} else {
 			model.addAttribute("check", 0);
@@ -167,15 +170,15 @@ public class MemberController {
 		return "member/delete";
 	}
 
-	// ?��?�� ?��?�� post
+
 	@RequestMapping(value = "/delete_proc", method = RequestMethod.POST)
 	public String delete_proc(MemberDTO deleteMemberDTO, HttpSession session, RedirectAttributes rttr)
 			throws Exception {
 
 		MemberDTO loginMemberDTO = (MemberDTO) session.getAttribute("loginMemberDTO");
-		// 로그?��?�� ?�� ?��?��?�� 존재?��?�� 비�?번호
+
 		String session_pw = loginMemberDTO.getMember_pw();
-		// ?��?��?�� deleteMemberDTO�? ?��?�� ?�� ?��?��?��?�� �? 비�?번호
+
 		String deleteMemberDTO_pw = deleteMemberDTO.getMember_pw();
 
 		if (!(session_pw.equals(deleteMemberDTO_pw))) {

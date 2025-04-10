@@ -68,7 +68,6 @@ ul{list-style:none;}
 	<ul>
 	<c:forEach var="reply" items="${reply}" >
 		<li>
-
 			<div class="reply_writer">작성자: ${reply.replyer_name}</div>
 			<div class="reply_date">댓글작성일시: <fmt:formatDate value="${reply.regdate}" pattern="yyyy-MM-dd hh:mm:ss" />
 			<!-- 댓글삭제버튼은 댓글작성자와 관리자만 볼 수 있게 처리 -->
@@ -81,7 +80,6 @@ ul{list-style:none;}
 	</c:forEach>
 	</ul>
 </div>
-
 <!-- 로그인 한 회원에게만 댓글 작성폼이 보이게 처리 -->
 <c:if test="${loginMemberDTO.memberLogin == true }">    
 <div>

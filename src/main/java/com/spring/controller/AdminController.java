@@ -49,7 +49,6 @@ public class AdminController {
 		return "redirect:/admin/order_payment_delivery";
 	}
 
-	// ?��?���??��
 	@GetMapping("/search_result")
 	private String getSearchList(@RequestParam("type") String type, @RequestParam("keyword") String keyword,
 			Model model) throws Exception {

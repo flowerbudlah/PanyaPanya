@@ -31,6 +31,7 @@ public class MemberDTO {
 
 	private String member_tel;
 	private String member_address;
+	
 	private int postcode;
 
 	private String question;

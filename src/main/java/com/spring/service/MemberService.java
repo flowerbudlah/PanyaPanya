@@ -32,7 +32,7 @@ public class MemberService {
 
 			return true;
 
-			// 입력한 그것은 이미 다른사람이 사용하고있다는 의미
+		// 입력한 그것은 이미 다른사람이 사용하고있다는 의미
 		} else {
 			return false;
 		}
@@ -122,7 +122,6 @@ public class MemberService {
 		memberDAO.modifyMemberInfo(modifyMemberDTO);
 	}
 
-	
 	public String find_id(HttpServletResponse response, String member_email) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
