@@ -34,7 +34,7 @@ public class CartDAO {
 		sqlSessionTemplate.delete("cart.delete", cart_idx);
 	}
 
-	// 결제금액
+
 	public int sum(String member_id) {
 		return sqlSessionTemplate.selectOne("cart.sum", member_id);
 	}
@@ -43,24 +43,24 @@ public class CartDAO {
 		sqlSessionTemplate.update("cart.updateAmount", updateAmountCartDTO);
 	}
 
-	// 1. 결제
 
-	// 1) 주문?��?�� ?���?, ?��?��?�� ?��보입?��
+
+
 	public void orderInfo(OrderDTO newOrderDTO) {
 		sqlSessionTemplate.insert("cart.orderInfo", newOrderDTO);
 	}
 
-	// 2) 주문 ?��?��?���?(주문번호, ?��?��물품, ?��?��, )
+
 	public void orderInfoDetail(OrderDetailDTO newOrderDetailDTO) {
 		sqlSessionTemplate.insert("cart.orderInfo_Details", newOrderDetailDTO);
 	}
 
-	// 3) 카트비우�?
+
 	public void emptyMyCart(String member_id) {
 		sqlSessionTemplate.delete("cart.emptyMyCart", member_id);
 	}
 
-	// 4) ?��?��?��?��?�� 결제?���? 리스?��
+
 	public List<OrderDTO> orderPaymentList(String member_id) {
 		return sqlSessionTemplate.selectList("cart.orderPaymentList", member_id);
 	}

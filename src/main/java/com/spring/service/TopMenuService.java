@@ -14,6 +14,7 @@ public class TopMenuService {
 	@Autowired
 	private TopMenuDAO topMenuDAO;
 
+	// 1. 메인화면에서 
 	public List<BoardDTO> getTopMenuList() {
 		List<BoardDTO> topMenuList = topMenuDAO.getTopMenuList();
 		return topMenuList;

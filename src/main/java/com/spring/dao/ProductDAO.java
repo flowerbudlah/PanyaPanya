@@ -16,6 +16,7 @@ public class ProductDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
+	
 	public List<ProductDTO> getProductListByCategory(int category_idx) {
 		List<ProductDTO> productListByCategory = sqlSessionTemplate.selectList("product.getProductListByCategory",
 				category_idx);

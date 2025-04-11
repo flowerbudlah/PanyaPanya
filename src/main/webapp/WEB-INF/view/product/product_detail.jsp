@@ -165,7 +165,6 @@ $(document).ready(function() {
 		}  
 	} 
 
-
 // 좋아요. 공감버튼
 function like(){
 	var product_idx = $("#product_idx").val();

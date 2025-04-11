@@ -6,8 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>팡야팡야</title>
-<link rel="icon" type="image/x-icon" href="image/favicon.png">>
+<link rel="icon" type="image/x-icon" href="${root }image/favicon.png">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(function(){
@@ -16,9 +19,6 @@
 		})
 	})
 </script>
-<style>
-
-</style>
 </head>
 <body>
 <c:import url="/WEB-INF/view/include/head_meta.jsp" />

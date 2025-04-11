@@ -24,17 +24,18 @@ public class MainController {
 	@Autowired
 	private TopMenuDAO topMenuDAO;
 
+	// 1. 웹 사이트 접속시 등장하는 main화면 (The main Page that appears when you access this website at the first Time.)
 	@GetMapping("/main")
 	public String main(HttpServletRequest request, Model model) {
+		
 		System.out.println(request.getServletContext().getRealPath("/"));
-
-		// 게시?�� 메인?��면에 미리?��?��?�� 그�?�?
+		
+		// 이 사이트에 존재하는 게시판 목록이 등장한다. 
 		List<List<PostDTO>> listAll = new ArrayList<List<PostDTO>>();
 
 		for (int i = 1; i <= 2; i++) {
 
 			List<PostDTO> mainList = mainService.getMainList(i);
-
 			listAll.add(mainList);
 
 		}
@@ -42,18 +43,19 @@ public class MainController {
 		model.addAttribute("listAll", listAll);
 
 		List<BoardDTO> boardNameList = topMenuDAO.getTopMenuList();
-
 		model.addAttribute("boardNameList", boardNameList);
 
 		return "main";
 
 	}
 
+	//
 	@GetMapping("etc/map")
 	public String map() {
 		return "etc/map";
 	}
 
+	//
 	@GetMapping("etc/not_admin")
 	public String notAdmin() {
 		return "etc/not_admin";

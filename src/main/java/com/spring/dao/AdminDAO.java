@@ -25,19 +25,18 @@ public class AdminDAO {
 		return allPaymentList;
 	}
 
-	// 배송�?�? �? 배송?���? �?�?
+	
 	public void changeDeliveryCircumstance(OrderDTO changeDeliveryOrderDTO) {
 		sqlSessionTemplate.update("admin.changeDeliveryCircumstance", changeDeliveryOrderDTO);
 	}
 
-	// ?��?���??�� ?��
+
 	public int numberOfResultSearchingMember(MemberDTO searchResultMemberDTO) {
-		int search_result_count = sqlSessionTemplate.selectOne("admin.numberOfResultSearchingMember",
-				searchResultMemberDTO);
+		int search_result_count = sqlSessionTemplate.selectOne("admin.numberOfResultSearchingMember", searchResultMemberDTO);
 		return search_result_count;
 	}
 
-	// �??�� 결과 ?��?��
+
 	public List<MemberDTO> resultSearchingMember(MemberDTO searchResultMemberDTO) {
 		return sqlSessionTemplate.selectList("admin.resultSearchingMember", searchResultMemberDTO);
 	}

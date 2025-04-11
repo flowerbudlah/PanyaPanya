@@ -34,7 +34,7 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 
-	// 1. 장바구니 안에 물건을 추가하는 처리
+	// 1. 장바구니 안에 물건을 추가하는 처리(Adding items to your shopping cart.)
 	@PostMapping("/cart/")
 	public @ResponseBody String addGoodsInCart(CartDTO cartDTO, HttpSession session) {
 

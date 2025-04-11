@@ -18,6 +18,7 @@ public class ReplyController {
 	@Autowired
 	ReplyService replyService;
 
+	// 
 	@PostMapping("/write")
 	public String write(ReplyDTO writeReplyDTO, @RequestParam("board_idx") int board_idx, Model model)
 			throws Exception {
@@ -27,6 +28,7 @@ public class ReplyController {
 		return "redirect:/board/read?board_idx={board_idx}&post_idx=" + writeReplyDTO.getPost_idx() + "&page=1";
 	}
 
+	// 
 	@RequestMapping("/delete")
 	public void delete(int reply_idx, @RequestParam("board_idx") int board_idx, @RequestParam("post_idx") int post_idx,
 			Model model) {

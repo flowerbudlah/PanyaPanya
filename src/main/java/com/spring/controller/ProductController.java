@@ -51,10 +51,10 @@ public class ProductController {
 
 		List<ProductReplyDTO> productReply = productService.replyList(product_idx);
 		model.addAttribute("productReply", productReply);
-		
+
 		List<ProductReReplyDTO> productReReply = productService.rereplyList(product_idx);
 		model.addAttribute("productReReply", productReReply);
-		
+
 		return "product/product_detail";
 	}
 
@@ -75,7 +75,7 @@ public class ProductController {
 		return "redirect:/product/product_by_category?category_idx={category_idx}";
 	}
 
-	// 4-1. 
+	// 4-1.
 	@GetMapping("/upload")
 	public String upload(@ModelAttribute("newProductDTO") ProductDTO newProductDTO) {
 
@@ -84,39 +84,36 @@ public class ProductController {
 
 	// 4-2. 
 	@PostMapping("/upload_proc")
-	public String addProduct
-	(@Valid @ModelAttribute("newProductDTO") ProductDTO newProductDTO, 
-			BindingResult result, MultipartFile product_image_file, Model model) {
-		
-		if (result.hasErrors() 
-				&& product_image_file.isEmpty() 
-					&& !(newProductDTO.getProduct_price() instanceof Integer)) {
-			
+	public String addProduct(@Valid @ModelAttribute("newProductDTO") ProductDTO newProductDTO, BindingResult result,
+			MultipartFile product_image_file, Model model) {
+
+		if (result.hasErrors() && product_image_file.isEmpty()
+				&& !(newProductDTO.getProduct_price() instanceof Integer)) {
+
 			model.addAttribute("priceErrorMessasge", "가격은 숫자만 입력가능합니다.");
 			model.addAttribute("imageUploadingErrorMessage", "상품등록페이지이기 때문에 이미지를 업로드하셔야 합니다.");
-			
+
 			return "product/upload";
-		
-		} else if(!result.hasErrors() && product_image_file.isEmpty()){
-		
+
+		} else if (!result.hasErrors() && product_image_file.isEmpty()) {
+
 			model.addAttribute("imageUploadingErrorMessage", "상품등록페이지이기 때문에 이미지를 업로드하셔야 합니다.");
-			
+
 			return "product/upload";
-			
-		} else if(!(newProductDTO.getProduct_price() instanceof Integer)) {
-			
+
+		} else if (!(newProductDTO.getProduct_price() instanceof Integer)) {
+
 			model.addAttribute("priceErrorMessasge", "가격은 숫자만 입력가능합니다.");
 			return "product/upload";
-			
+
 		} else {
 
 			productService.addProduct(newProductDTO);
 			return "redirect:/product/product_by_category?category_idx=" + newProductDTO.getCategory_idx();
 
 		}
-		
-	}
 
+	}
 
 	@GetMapping("/modify")
 	public String modify(@RequestParam("category_idx") int category_idx, @RequestParam("product_idx") int product_idx,
@@ -162,37 +159,31 @@ public class ProductController {
 
 		return "redirect:/product/product_detail?product_idx=" + writeProductReplyDTO.getProduct_idx();
 	}
-	
+
 	// 대댓글 달기
 	@PostMapping("/product_detail/writeReReply")
-	public String writeReReply
-	(ProductReReplyDTO ReReplyDTO, 
-			@RequestParam("product_reply_idx") int product_reply_idx, 
-			@RequestParam("product_idx") int product_idx, Model model) 
-	throws Exception {
+	public String writeReReply(ProductReReplyDTO ReReplyDTO, @RequestParam("product_reply_idx") int product_reply_idx,
+			@RequestParam("product_idx") int product_idx, Model model) throws Exception {
 
 		model.addAttribute("product_reply_idx", product_reply_idx);
 		productService.writeReReply(ReReplyDTO);
 
 		return "redirect:/product/product_detail?product_idx=" + product_idx;
 	}
-	
+
 	@RequestMapping("/product_detail/deleteProductReply")
-	public @ResponseBody ProductReplyDTO deleteProductReply
-	(HttpServletRequest request, HttpServletResponse response, int product_reply_idx) throws Exception {
+	public @ResponseBody ProductReplyDTO deleteProductReply(HttpServletRequest request, HttpServletResponse response,
+			int product_reply_idx) throws Exception {
 
 		ProductReplyDTO productReplyDTO = productService.deleteProductReply(product_reply_idx);
 		return productReplyDTO;
 	}
 
 	@RequestMapping("/product_detail/deleteProductReReply")
-	public @ResponseBody ProductReReplyDTO deleteProductReReply
-	(HttpServletRequest request, HttpServletResponse response, int product_rereply_idx) throws Exception {
+	public @ResponseBody ProductReReplyDTO deleteProductReReply(HttpServletRequest request,
+			HttpServletResponse response, int product_rereply_idx) throws Exception {
 		ProductReReplyDTO rereplyDTO = productService.deleteProductReReply(product_rereply_idx);
 		return rereplyDTO;
 	}
-	
-	
-	
-	
+
 }
