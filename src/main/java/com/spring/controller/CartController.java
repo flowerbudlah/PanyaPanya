@@ -56,7 +56,7 @@ public class CartController {
 		}
 	}
 
-	// 2. 특정회원의 장바구니 탐색 
+	// 2. 특정회원의 장바구니 탐색
 	@RequestMapping(value = "/cart/cartlist/{member_id}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String myCart(@PathVariable("member_id") String member_id, Model model) {
 

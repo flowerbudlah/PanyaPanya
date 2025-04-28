@@ -63,8 +63,7 @@ public class MemberController {
 
 	// 2. 1) 로그인 페이지로 이동
 	@GetMapping("/login")
-	public String login(@ModelAttribute("tmpLoginMemberDTO") MemberDTO loginMemberDTO,
-			@RequestParam(value = "failure", defaultValue = "false") boolean failure, Model model) {
+	public String login(@ModelAttribute("tmpLoginMemberDTO") MemberDTO loginMemberDTO, @RequestParam(value = "failure", defaultValue = "false") boolean failure, Model model) {
 		model.addAttribute("failure", failure);
 		return "member/login";
 	}
@@ -75,6 +74,7 @@ public class MemberController {
 			BindingResult result) {
 
 		if (result.hasErrors()) {
+			
 			return "member/login";
 			
 		} else {
@@ -113,6 +113,7 @@ public class MemberController {
 			return "member/modify";
 
 		} else {
+			
 			memberService.modifyMemberInfo(modifyMemberDTO);
 			return "member/modify_success";
 
@@ -126,7 +127,7 @@ public class MemberController {
 		return "/member/find_id_form";
 	}
 
-	// 4. 2)
+	// 4. 2) Email을 입력하고 ID를 찾는다. (in 아이디 찾는 페이지)
 	@RequestMapping(value = "/find_id", method = RequestMethod.POST)
 	public String find_id(HttpServletResponse response, 
 			@RequestParam("member_email") String member_email, Model model) throws Exception {
@@ -135,12 +136,13 @@ public class MemberController {
 		return "/member/find_id";
 	}
 
-
+	// 5. 1) 분실한 비밀번호를 찾기위해서 마련된 페이지로 이동
 	@RequestMapping(value = "/find_password_question")
 	public String find_password_question() {
 		return "/member/find_password_question";
 	}
 
+	// 5. 2) 분실한 비밀번호를 찾기위해서 ID를 입력하고 본인 확인 질문을 가져온다. 
 	@RequestMapping(value = "/find_password_answer", method = RequestMethod.POST)
 	public String find_password_answer(HttpServletResponse response, @RequestParam("member_id") String member_id,
 			Model model) throws Exception {
@@ -148,32 +150,35 @@ public class MemberController {
 		model.addAttribute("memberDTO", memberService.find_question(response, member_id));
 		return "/member/find_password_answer";
 	}
-
-
+	
+	// 5. 2) 위 질문에 대한 알맞은 답을 입력하고 비밀번호를 찾는다. 
 	@RequestMapping(value = "/find_password", method = RequestMethod.POST)
 	public String find_password(MemberDTO answerAndId, Model model) {
 
 		MemberDTO password = memberService.find_password(answerAndId);
 
+		// 알맞은 응답을 못한경우
 		if (password == null) {
 			model.addAttribute("check", 1);
+		
+		// 알맞은 응답을 하였기에 비밀번호를 가져온다.
 		} else {
 			model.addAttribute("check", 0);
 			model.addAttribute("password", password.getMember_pw());
 		}
+		
 		return "/member/find_password_answer";
 	}
 
-	// 4.
+	// 6. 1) 회원탈퇴 페이지로 이동
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete() throws Exception {
 		return "member/delete";
 	}
 
-
+	// 6. 2) 정보를 입력하고 회원탈퇴 버튼을 누르고 탈퇴성공
 	@RequestMapping(value = "/delete_proc", method = RequestMethod.POST)
-	public String delete_proc(MemberDTO deleteMemberDTO, HttpSession session, RedirectAttributes rttr)
-			throws Exception {
+	public String delete_proc(MemberDTO deleteMemberDTO, HttpSession session, RedirectAttributes rttr) throws Exception {
 
 		MemberDTO loginMemberDTO = (MemberDTO) session.getAttribute("loginMemberDTO");
 
@@ -185,6 +190,7 @@ public class MemberController {
 			rttr.addFlashAttribute("msg", false);
 			return "redirect:/member/delete";
 		}
+		
 		memberService.delete(deleteMemberDTO);
 		session.invalidate();
 		return "redirect:/main";

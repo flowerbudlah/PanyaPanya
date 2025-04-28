@@ -83,9 +83,9 @@
 	<insert id="orderInfo_Details" parameterType="com.spring.dto.OrderDetailDTO">
 		insert into order_detail_table(order_idx, product_idx, amount)
 		
-		select #{order_idx}, product_idx, amount
-		from cart_table
-		where member_id = #{member_id}
+								select #{order_idx}, product_idx, amount
+								from cart_table
+								where member_id = #{member_id}
 	</insert>
 
 	<!-- 9. 카트 비우기 (결제를 완료하면, 특정회원의 장바구니 안에있는 물건을 삭제한다.)-->

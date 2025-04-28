@@ -1,11 +1,17 @@
 package com.spring.service;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Base64;
 import java.util.List;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,8 +28,8 @@ public class ProductService {
 	@Autowired
 	private ProductDAO productDAO;
 
-	@Value("${item.path.load}")
-	private String item_path_load;
+//	@Value("${item.path.load}")
+//	private String item_path_load;
 
 	public List<ProductDTO> getProductListByCategory(int category_idx) {
 		List<ProductDTO> productListByCategory = productDAO.getProductListByCategory(category_idx);
@@ -36,17 +42,63 @@ public class ProductService {
 	}
 
 	private String saveUploadFile(MultipartFile product_image_file) {
-
-		String file_name = product_image_file.getOriginalFilename();
-
+		
 		try {
-			product_image_file.transferTo(new File(item_path_load + "/" + file_name));
-		} catch (IllegalStateException e) {
+			
+			String clientId = "e957565cfb7c026";
+			URL url = new URL("https://api.imgur.com/3/image");
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(true);
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "Client-ID " + clientId);
+
+			// 파일 내용을 Base64로 인코딩
+			byte[] imageBytes = product_image_file.getBytes();
+			String encodedImage = Base64.getEncoder().encodeToString(imageBytes);
+			
+			String data = URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(encodedImage, "UTF-8");
+			
+			OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+			writer.write(data);
+			writer.flush();
+			writer.close();
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			
+			String line;
+			
+			while ((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+			
+			reader.close();
+			
+			// 응답 JSON 파싱
+			JSONObject json = new JSONObject(sb.toString());
+			
+			String link = json.getJSONObject("data").getString("link");  // 업로드된 이미지 링크
+			
+			return link;  // DB에 저장할 링크 반환
+	
+		} catch (Exception e) {
+			
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			return null;
+		
 		}
-		return file_name;
+		
+		// String file_name = product_image_file.getOriginalFilename();
+
+		// try {
+		//	product_image_file.transferTo(new File(item_path_load + "/" + file_name));
+		// } catch (IllegalStateException e) {
+		//	e.printStackTrace();
+		// } catch (IOException e) {
+		//	e.printStackTrace();
+		// }
+		// return file_name;
 	}
 
 	public void addProduct(ProductDTO newProductDTO) {

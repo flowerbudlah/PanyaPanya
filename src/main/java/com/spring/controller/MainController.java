@@ -49,13 +49,13 @@ public class MainController {
 
 	}
 
-	//
+	// 2. 메뉴에서 오시는 길(지도)을 선택했을때 구글 지도 페이지로 이동
 	@GetMapping("etc/map")
 	public String map() {
 		return "etc/map";
 	}
 
-	//
+	// 3. 관리자가 아닌 사용자가 관리자 페이지에 입장했을경우 이동하는 페이지
 	@GetMapping("etc/not_admin")
 	public String notAdmin() {
 		return "etc/not_admin";

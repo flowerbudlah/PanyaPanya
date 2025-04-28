@@ -18,7 +18,6 @@
 table {
 	border: 1px solid lightgray;
 }
-
 th {
 	color: white;
 	background-color: #df4759;

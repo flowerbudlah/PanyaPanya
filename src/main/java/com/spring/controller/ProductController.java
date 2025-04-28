@@ -31,6 +31,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
+	// 1. 1) 상품이 카테고리별(케이크, 빵, 쿠키 등)로 분류되어 있는 메뉴 페이지로 이동
 	@GetMapping("/product_by_category")
 	public String product_by_category(@RequestParam("category_idx") int category_idx, Model model) {
 		model.addAttribute("category_idx", category_idx);
@@ -41,6 +42,7 @@ public class ProductController {
 		return "product/product_by_category";
 	}
 
+	// 1. 2) 상품 상세보기
 	@GetMapping("/product_detail")
 	public String product_detail(@RequestParam("product_idx") int product_idx, Model model) {
 
@@ -49,24 +51,63 @@ public class ProductController {
 		ProductDTO productDetail = productService.getProductDetail(product_idx);
 		model.addAttribute("productDetail", productDetail);
 
+		// 해당 상품에 달린 댓글
 		List<ProductReplyDTO> productReply = productService.replyList(product_idx);
 		model.addAttribute("productReply", productReply);
 
+		// 해당 상품에 달린 대댓글
 		List<ProductReReplyDTO> productReReply = productService.rereplyList(product_idx);
 		model.addAttribute("productReReply", productReReply);
 
 		return "product/product_detail";
 	}
 
-	// 6. 상품 추천
+	// 2. 상품 추천
 	@RequestMapping("/product_detail/like")
-	public @ResponseBody ProductDTO like(HttpServletRequest request, HttpServletResponse response, int product_idx)
-			throws Exception {
+	public @ResponseBody ProductDTO like(HttpServletRequest request, HttpServletResponse response, int product_idx)  throws Exception {
 		ProductDTO productDTOAfterLike = productService.like(product_idx);
 		return productDTOAfterLike;
 	}
+	
+	// 3. 1) 상품에 대한 댓글 달기
+	@PostMapping("/product_detail/write")
+	public String write(ProductReplyDTO writeProductReplyDTO, @RequestParam("product_idx") int product_idx, Model model) throws Exception {
 
-	// 3. 장바구니에서 해당 상품 제거하기
+		model.addAttribute("product_idx", product_idx);
+		productService.write(writeProductReplyDTO);
+
+		return "redirect:/product/product_detail?product_idx=" + writeProductReplyDTO.getProduct_idx();
+	}
+	
+	// 3. 2) 상품에 대한 댓글 삭제
+	@RequestMapping("/product_detail/deleteProductReply")
+	public @ResponseBody ProductReplyDTO deleteProductReply(HttpServletRequest request, HttpServletResponse response, int product_reply_idx) throws Exception {
+
+		ProductReplyDTO productReplyDTO = productService.deleteProductReply(product_reply_idx);
+		return productReplyDTO;
+	
+	}
+
+	// 3. 3) 상품에 대한 대댓글 달기
+	@PostMapping("/product_detail/writeReReply")
+	public String writeReReply(ProductReReplyDTO ReReplyDTO, @RequestParam("product_reply_idx") int product_reply_idx, @RequestParam("product_idx") int product_idx, Model model) throws Exception {
+
+		model.addAttribute("product_reply_idx", product_reply_idx);
+		productService.writeReReply(ReReplyDTO);
+
+		return "redirect:/product/product_detail?product_idx=" + product_idx;
+	
+	}
+	
+	// 3. 4) 상품에 대한 대댓글 삭제 
+	@RequestMapping("/product_detail/deleteProductReReply")
+	public @ResponseBody ProductReReplyDTO deleteProductReReply(HttpServletRequest request, HttpServletResponse response, int product_rereply_idx) throws Exception {
+		
+		ProductReReplyDTO rereplyDTO = productService.deleteProductReReply(product_rereply_idx);
+		return rereplyDTO;
+	}
+	
+	// 4. 장바구니에서 해당 상품 제거하기
 	@GetMapping("/delete")
 	public String delete(int product_idx, @RequestParam("category_idx") int category_idx, Model model) {
 
@@ -145,45 +186,6 @@ public class ProductController {
 		productService.modify(modifyProductDTO);
 
 		return "redirect:/product/product_by_category?category_idx=" + modifyProductDTO.getCategory_idx();
-	}
-
-	// 6. ?��?��?��?�� ?��?���??�� ?��록하?�� ?���?
-
-	// 1) 상품에 대한 댓글 달기
-	@PostMapping("/product_detail/write")
-	public String write(ProductReplyDTO writeProductReplyDTO, @RequestParam("product_idx") int product_idx, Model model)
-			throws Exception {
-
-		model.addAttribute("product_idx", product_idx);
-		productService.write(writeProductReplyDTO);
-
-		return "redirect:/product/product_detail?product_idx=" + writeProductReplyDTO.getProduct_idx();
-	}
-
-	// 대댓글 달기
-	@PostMapping("/product_detail/writeReReply")
-	public String writeReReply(ProductReReplyDTO ReReplyDTO, @RequestParam("product_reply_idx") int product_reply_idx,
-			@RequestParam("product_idx") int product_idx, Model model) throws Exception {
-
-		model.addAttribute("product_reply_idx", product_reply_idx);
-		productService.writeReReply(ReReplyDTO);
-
-		return "redirect:/product/product_detail?product_idx=" + product_idx;
-	}
-
-	@RequestMapping("/product_detail/deleteProductReply")
-	public @ResponseBody ProductReplyDTO deleteProductReply(HttpServletRequest request, HttpServletResponse response,
-			int product_reply_idx) throws Exception {
-
-		ProductReplyDTO productReplyDTO = productService.deleteProductReply(product_reply_idx);
-		return productReplyDTO;
-	}
-
-	@RequestMapping("/product_detail/deleteProductReReply")
-	public @ResponseBody ProductReReplyDTO deleteProductReReply(HttpServletRequest request,
-			HttpServletResponse response, int product_rereply_idx) throws Exception {
-		ProductReReplyDTO rereplyDTO = productService.deleteProductReReply(product_rereply_idx);
-		return rereplyDTO;
 	}
 
 }

@@ -17,7 +17,6 @@ td{text-align:center; border: 1px solid gray;}
 <body>
 <c:import url="/WEB-INF/view/include/head_meta.jsp" />
 <c:import url="/WEB-INF/view/include/top_menu.jsp" />
-<!-- 시작 -->
 <div class="container" style="margin:50px;">
 <h5>${loginMemberDTO.member_name } 전용 페이지 (The Page for the Administrator only)</h5>
 <p>회원목록</p>
@@ -57,7 +56,6 @@ td{text-align:center; border: 1px solid gray;}
 		</c:forEach>
 		</tbody>
 </table> 
-
 </div>
 <c:import url="/WEB-INF/view/include/bottom_info.jsp" />
 </body>

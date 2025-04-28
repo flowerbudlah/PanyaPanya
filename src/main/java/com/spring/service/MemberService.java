@@ -1,14 +1,11 @@
 package com.spring.service;
 
 import java.io.PrintWriter;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
 import com.spring.dao.MemberDAO;
 import com.spring.dto.MemberDTO;
 
@@ -128,14 +125,18 @@ public class MemberService {
 
 		String id = memberDAO.find_id(member_email);
 
+		// 회원정보가 없는 경우
 		if (id == null) {
 			out.println("<script>");
-			out.println("alert('媛��엯�맂 �븘�씠�뵒媛� �뾾�뒿�땲�떎.');");
+			out.println("alert('회원정보가 없습니다. 다시 한번 확인하시고 입력해주세요!<br>Sorry, There is no informaton about you.');");
 			out.println("history.go(-1);");
 			out.println("</script>");
 			out.close();
 			return null;
+		
+		// 회원정보가 있는경우
 		} else {
+			
 			return id;
 		}
 	}
@@ -146,9 +147,10 @@ public class MemberService {
 
 		MemberDTO memberDTO = memberDAO.find_question(member_id);
 
+		// 비밀번호가 맞지않는 경우
 		if (memberDTO == null) {
 			out.println("<script>");
-			out.println("alert('ㅓㅓㅓ');");
+			out.println("alert('잘못된 답을 입력하셨습니다. 다시한번 확인하시고 입력해주세요!');");
 			out.println("history.go(-1);");
 			out.println("</script>");
 			out.close();
@@ -159,13 +161,12 @@ public class MemberService {
 	}
 
 	public MemberDTO find_password(MemberDTO answerAndId) {
-		return memberDAO.find_password(answerAndId);
-
-	}
 	
+		return memberDAO.find_password(answerAndId);
+	}
+
 	// 4. 회원탈퇴
 	public void delete(MemberDTO deleteMemberDTO) throws Exception {
 		memberDAO.delete(deleteMemberDTO);
 	}
-
 }

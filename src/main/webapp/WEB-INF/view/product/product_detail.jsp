@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var='root' value="${pageContext.request.contextPath }/"/>
 <!DOCTYPE html>
 <html>
@@ -204,12 +205,24 @@ function like(){
 </script>
 </head>
 <style>
-.entire{border: 1px solid lightgray; font-size: 15px; }
-
-ul{list-style:none;}
-.reply{ font-size: 12px;  }
-.reply_writer{ text-align:left; position: absolute; }
-.reply_date{ text-align:right;  position: relative; }
+.entire{
+	border: 1px solid lightgray;
+	font-size: 15px;
+}
+ul{
+	list-style:none;
+}
+.reply{
+	font-size: 12px;
+}
+.reply_writer{
+	text-align:left; 
+	position: absolute;
+}
+.reply_date{
+	text-align:right;
+	position: relative; 
+}
 </style>
 <body>
 <c:import url="/WEB-INF/view/include/head_meta.jsp" />
@@ -221,7 +234,14 @@ ul{list-style:none;}
 <table class="entire">
 	<tr>
 		<td>
-			<img src="${root }image/product/${productDetail.product_img}" width="500px" height="450px" alt="${productDetail.product_name}">
+			<c:choose>
+				<c:when test="${fn:startsWith(productDetail.product_img, 'https://i.imgur.com/')}">
+					<img src="${ productDetail.product_img}" width="500px" height="450px" alt="${productDetail.product_name}">
+        		</c:when>
+        		<c:otherwise>
+        			<img src="${root }image/product/${productDetail.product_img}" width="500px" height="450px" alt="${productDetail.product_name}">
+        		</c:otherwise>
+			</c:choose>
 		</td>
 		<td align="center">
 			<table style=" width:500px; height:450px;">

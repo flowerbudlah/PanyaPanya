@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="root" value="${pageContext.request.contextPath }/" />
 <!DOCTYPE html>
@@ -38,7 +39,14 @@ table{ margin: 0 auto; width:1200px; position: relative; font-family: 'Single Da
 	<td>
         <div class="goods">
         	<li>
-				<img src="${root }image/product/${productDTO.product_img}" width="300px" height="300px" alt="${productDTO.product_name}">
+        		<c:choose>
+        			  <c:when test="${fn:startsWith(productDTO.product_img, 'https://i.imgur.com/')}">
+        			  	<img src="${ productDTO.product_img}" width="300px" height="300px" alt="${productDTO.product_name}">
+        			</c:when>
+        			<c:otherwise>
+        				<img src="${root }image/product/${productDTO.product_img}" width="300px" height="300px" alt="${productDTO.product_name}">
+        			</c:otherwise>
+				</c:choose>
         		<div class="test_hover">
     				<h3>${productDTO.product_name}</h3>
     				<h1><fmt:formatNumber value="${productDTO.product_price}" pattern="###,###,###"/> ￦</h1>
@@ -54,8 +62,6 @@ table{ margin: 0 auto; width:1200px; position: relative; font-family: 'Single Da
 </c:forEach>
 </table>
 </ul>
-
-
 <div align="right">
 <c:choose>
 	<c:when test="${loginMemberDTO.member_id eq 'admin'}">
@@ -67,8 +73,6 @@ table{ margin: 0 auto; width:1200px; position: relative; font-family: 'Single Da
 	</c:otherwise>
 </c:choose>
 </div>
-
-
 <!-- 하단 정보부분 -->
 </div>
 <c:import url="/WEB-INF/view/include/bottom_info.jsp" />

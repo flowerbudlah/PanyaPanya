@@ -18,17 +18,16 @@ public class ReplyController {
 	@Autowired
 	ReplyService replyService;
 
-	// 
+	// 1. 게시판에서 리플 달기
 	@PostMapping("/write")
-	public String write(ReplyDTO writeReplyDTO, @RequestParam("board_idx") int board_idx, Model model)
-			throws Exception {
+	public String write(ReplyDTO writeReplyDTO, @RequestParam("board_idx") int board_idx, Model model) throws Exception {
 
 		model.addAttribute("board_idx", board_idx);
 		replyService.write(writeReplyDTO);
 		return "redirect:/board/read?board_idx={board_idx}&post_idx=" + writeReplyDTO.getPost_idx() + "&page=1";
 	}
 
-	// 
+	// 2. 게시판에서 리플 삭제
 	@RequestMapping("/delete")
 	public void delete(int reply_idx, @RequestParam("board_idx") int board_idx, @RequestParam("post_idx") int post_idx,
 			Model model) {

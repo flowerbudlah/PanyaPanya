@@ -13,9 +13,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script>
-//자바스크립트 또는 아작스 들어갈곳 
-</script>
 <style>
 ul{list-style:none;}
 .reply{ font-size: 12px;  }
@@ -56,11 +53,15 @@ ul{list-style:none;}
 			</div>
 			<!-- 업로드한 파일이 있는 경우에만 실행하도록 함 -->
 			<c:if test="${readPostDTO.post_file != null }">
-          	<div class="form-group">
-          		<label for="board_file" style="font-size:13px;">첨부 이미지</label>
-          		<img src="${root }upload/${readPostDTO.post_file}" width=100%; height=350px;/>            
-          	</div>
+          		<div class="form-group">
+          			<label for="board_file" style="font-size:13px;">첨부 이미지</label>
+          			<img src="${readPostDTO.post_file}" width=100%; height=350px;/> 
+          			<!-- 
+          				<img src="${root }upload/${readPostDTO.post_file}" width=100%; height=350px;/> 
+          			 -->           
+          		</div>
           	</c:if>
+          	
 <hr/>
 <!-- 댓글시작 -->
 <!--댓글 목록불러오기 -->
@@ -89,7 +90,7 @@ ul{list-style:none;}
 		<input type="hidden" id="relyer_id" name="replyer_id" value="${loginMemberDTO.member_id }">
 		<textarea name="reply_content" id="reply_content" class="form-control" rows="3" style="resize:none" placeholder="댓글을 입력해주세요! 고운말을 써주세요!"></textarea>
 		<div class="text-right">
-		<button type="submit" class="btn btn-success btn-sm" style="text-align:right;">댓글 작성</button>
+			<button type="submit" class="btn btn-success btn-sm" style="text-align:right;">댓글 작성</button>
 		</div>
 	</form>
 </div>

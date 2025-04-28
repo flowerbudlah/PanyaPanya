@@ -8,15 +8,11 @@
 <title>팡야팡야</title>
 <link rel="icon" type="image/x-icon" href="image/favicon.png">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-<style>
-
-</style>
 </head>
 <body>
 <c:import url="/WEB-INF/view/include/head_meta.jsp" />
 <c:import url="/WEB-INF/view/include/top_menu.jsp" />
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
-<!-- 내용 -->
 <div class="text-center">
 <form action="${root }member/find_id" method="post">
 	<div>
@@ -32,10 +28,6 @@
 		</p>
 	</div>
 </form>
-			
-			
-
-<!-- 하단 -->
 </div>
 </div>
 <c:import url="/WEB-INF/view/include/bottom_info.jsp" />

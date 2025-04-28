@@ -12,8 +12,7 @@
    	
    	<!--1. 2) 결제내역 -->
    	<select id="getAllPayment" resultType="com.spring.dto.OrderDTO">
-		select * 
-		from order_table
+		select * from order_table
    	</select>
 	
 	<!-- 1. 3) 배송상황 변경하기 -->

@@ -55,9 +55,7 @@
 
 	<!-- 2. 회원가입시 입력한 답을 제출하여 비번찾기(로그인과 형태유사? ) -->
 	<select id="find_password" parameterType="com.spring.dto.MemberDTO" resultType="com.spring.dto.MemberDTO">
-		select * 
-		from panya_member_table 
-		where answer = #{answer} and member_id = #{member_id}
+		select * from panya_member_table where answer = #{answer} and member_id = #{member_id}
 	</select>
 
 </mapper>
