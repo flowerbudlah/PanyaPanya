@@ -44,14 +44,14 @@ a:visited {
 			<ul class="test">
 				<c:choose>
 					<c:when test="${loginMemberDTO.memberLogin == true }">
-						<!--로그인 된상태 -->
+						<!-- In case that User signs in -->
 						<li><a href="${root }member/delete" style="color: black;">회원탈퇴</a></li>
 						<li><a href="${root }member/modify" style="color: black;">회원정보수정</a></li>
 						<li><a href="${root }member/logout" style="color: black;">로그아웃</a></li>
 						<li>${loginMemberDTO.member_name}님 </li>
 					</c:when>
 					<c:otherwise>
-						<!-- 로그인 안된상태 -->
+						<!-- In case that User dosen't sign in -->
 						<li><a href="${root }member/join" style="color: black;">회원가입</a></li>
 						<li><a href="${root }member/login" style="color: black;">로그인</a></li>
 					</c:otherwise>

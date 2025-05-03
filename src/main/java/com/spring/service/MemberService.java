@@ -1,3 +1,4 @@
+
 package com.spring.service;
 
 import java.io.PrintWriter;
@@ -128,7 +129,7 @@ public class MemberService {
 		// 회원정보가 없는 경우
 		if (id == null) {
 			out.println("<script>");
-			out.println("alert('회원정보가 없습니다. 다시 한번 확인하시고 입력해주세요!<br>Sorry, There is no informaton about you.');");
+			out.println("alert('회원정보가 없습니다. 다시 한번 확인하시고 입력해주세요! Sorry, There is no informaton about you.');");
 			out.println("history.go(-1);");
 			out.println("</script>");
 			out.close();

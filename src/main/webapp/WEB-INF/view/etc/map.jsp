@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>팡야팡야</title>
-<link rel="icon" type="image/x-icon" href="${root}image/favicon.png">
+<link rel="icon" type="image/x-icon" href="${root}image/ryeBreadFavicon.png">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 </head>
 <body>
@@ -30,7 +30,6 @@
 				
 				marker.setMap(map);
 			</script>
-			
 			<div class="address" style="margin-top: 20px;">
 				<p>서울특별시 서대문구 신촌로 119, 2~3층(창천동) 신촌역 4번출구 80m</p>
 				<p><strong>Tel. (+82)02-313-1132<br>Fax.(+82)070-8622-5523</strong></p>

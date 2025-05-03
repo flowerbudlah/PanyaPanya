@@ -17,11 +17,9 @@
 						values(#{post_idx}, #{replyer_id}, #{reply_content, jdbcType=VARCHAR}, now())
 	</insert>
 
-	<!-- 1. 3)댓글 삭제 -->
+	<!-- 1. 3) 댓글 삭제 -->
 	<delete id="replyDelete" parameterType="java.lang.Integer">
-		delete
-		from reply_table
-		where reply_idx = #{reply_idx}
+		delete from reply_table where reply_idx = #{reply_idx}
 	</delete>
 
 </mapper>

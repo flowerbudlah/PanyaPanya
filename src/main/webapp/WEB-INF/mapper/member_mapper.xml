@@ -32,9 +32,16 @@
 	<!--6. 회원정보 수정하기(Modify the member's information) -->
 	<update id="modifyMemberInfo" parameterType="com.spring.dto.MemberDTO">
 		update panya_member_table
-		set member_pw=#{member_pw}, member_email=#{member_email}, member_tel=#{member_tel}, member_address=#{member_address}, 
-			question=#{question}, answer=#{answer}, postcode =  #{postcode}
-		where member_idx=#{member_idx}
+		set 
+			member_pw=#{member_pw},
+			member_email=#{member_email},
+			member_tel=#{member_tel},
+			member_address=#{member_address}, 
+			question=#{question},
+			answer=#{answer},
+			postcode = #{postcode}
+		where
+			member_idx=#{member_idx}
 	</update>
 
 	<!-- 7. 회원탈퇴 기능 -->
@@ -48,12 +55,12 @@
 	</select>
 
 	<!-- 9. 비번찾는단계 -->
-	<!-- 1. 회원가입시 입력한 질문을 얻기 -->
+	<!-- 1) 회원가입시 입력한 질문을 얻기 -->
 	<select id="find_question" parameterType="java.lang.String" resultType="com.spring.dto.MemberDTO">
 		select member_id, question from panya_member_table where member_id = #{member_id}
 	</select>
 
-	<!-- 2. 회원가입시 입력한 답을 제출하여 비번찾기(로그인과 형태유사? ) -->
+	<!-- 2) 회원가입시 입력한 답을 제출하여 비번찾기(로그인과 형태유사? ) -->
 	<select id="find_password" parameterType="com.spring.dto.MemberDTO" resultType="com.spring.dto.MemberDTO">
 		select * from panya_member_table where answer = #{answer} and member_id = #{member_id}
 	</select>

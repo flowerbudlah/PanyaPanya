@@ -143,17 +143,9 @@ public class CartController {
 
 	// 7. 로그인한 회원의 주문상세 정보 페이지로 이동
 	@GetMapping("/order/orderInfo_Details")
-	public String getOrderList(HttpSession session, @RequestParam("order_idx") String order_idx,
-			OrderDTO idAndOrderIdxOrderDTO, Model model) {
+	public String getOrderList(@RequestParam("order_idx") String order_idx, Model model) {
 
-		MemberDTO loginMemberDTO = (MemberDTO) session.getAttribute("loginMemberDTO");
-		String member_id = loginMemberDTO.getMember_id();
-
-		idAndOrderIdxOrderDTO.setMember_id(member_id);
-		idAndOrderIdxOrderDTO.setOrder_idx(order_idx);
-
-		List<OrderListDTO> allInformationAboutOrder = cartService.allInformationAboutOrder(idAndOrderIdxOrderDTO);
-
+		List<OrderListDTO> allInformationAboutOrder = cartService.allInformationAboutOrder(order_idx);
 		model.addAttribute("allInformationAboutOrder", allInformationAboutOrder);
 
 		return "mypage/order/orderInfo_Details";

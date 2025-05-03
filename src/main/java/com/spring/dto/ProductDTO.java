@@ -26,9 +26,7 @@ public class ProductDTO {
 	private String product_img;
 
 	private MultipartFile product_image_file; 
-
 	private int likeButton;
-
 	private String result;
 
 }

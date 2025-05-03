@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>팡야팡야</title>
-<link rel="icon" type="image/x-icon" href="image/favicon.png">
+<link rel="icon" type="image/x-icon" href="image/ryeBreadFavicon.png">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -52,10 +52,10 @@ thead {
 					<img src="image/4.png" width="1100" height="500">
 					<div class="carousel-caption">
 						<h1>ようこそ。</h1>
-						<h2>ありがとうございます。</h2>
+						<h4>管理者ID：admin　パスワード：1111</h4>
+						<h5>ログインしていください。</h5>	
 					</div>
 				</div>
-
 				<div class="carousel-item">
 					<img src="image/1.png" width="1100" height="500">
 				</div>
@@ -90,7 +90,7 @@ thead {
 			</a>
 		</div>
 	</div>
-	<!-- 공지사항 미리보기 부분 -->
+	<!-- 공지사항 미리보기 부분 Notice preview -->
 	<c:forEach var="sub_list" items="${listAll}" varStatus="status">
 		<div class="container" style="margin-top: 50px; margin-bottom: 50px">
 			<div class="row">
@@ -114,9 +114,9 @@ thead {
 											<td class="text-center d-none d-md-table-cell">${postDTO.post_idx }</td>
 											<td class="w-50">
 												<a href='${root }board/read?board_idx=${boardNameList[0].board_idx }&post_idx=${postDTO.post_idx}&page=1'>${postDTO.post_subject }
-													<!-- 그림 첨부파일 업로드 한 경우 -->
+													<!-- 그림 첨부파일 업로드 한 경우 In case that There is a attached Image file. -->
 													<c:if test="${postDTO.post_file != null }">
-														<img src="${root }image/uploadingPhoto.png" width=20px;>
+														<img src="image/uploadingPhoto.png" width=20px;>
 													</c:if>
 													<c:if test="${postDTO.reply_cnt > 0}">
 														<span style="color: red;">[${postDTO.reply_cnt}]</span>
@@ -124,8 +124,7 @@ thead {
 												</a>
 											</td>
 											<td class="text-center d-none d-md-table-cell">${postDTO.post_writer_name }</td>
-											<td class="text-center d-none d-md-table-cell">
-												<fmt:formatDate value="${postDTO.post_date }" pattern="yyyy-MM-dd" /></td>
+											<td class="text-center d-none d-md-table-cell"><fmt:formatDate value="${postDTO.post_date }" pattern="yyyy-MM-dd" /></td>
 											<td class="text-center d-none d-md-table-cell">${postDTO.post_read_count }</td>
 										</tr>
 									</c:forEach>
@@ -140,7 +139,7 @@ thead {
 			</div>
 		</div>
 	</c:forEach>
-	<!-- 게시판 미리보기 부분 끝-->
+<!-- 게시판 미리보기 부분 끝-->
 <!-- 하단 정보 -->
 <c:import url="/WEB-INF/view/include/bottom_info.jsp" />
 </body>

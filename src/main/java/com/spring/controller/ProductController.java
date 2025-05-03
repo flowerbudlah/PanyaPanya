@@ -106,8 +106,8 @@ public class ProductController {
 		ProductReReplyDTO rereplyDTO = productService.deleteProductReReply(product_rereply_idx);
 		return rereplyDTO;
 	}
-	
-	// 4. 장바구니에서 해당 상품 제거하기
+
+	// 4. 장바구니에서 해당 상품 제거하기 Deleting the Goods in user's cart.
 	@GetMapping("/delete")
 	public String delete(int product_idx, @RequestParam("category_idx") int category_idx, Model model) {
 
@@ -116,14 +116,15 @@ public class ProductController {
 		return "redirect:/product/product_by_category?category_idx={category_idx}";
 	}
 
-	// 4-1.
+	// 5. 1) 새로운 상품등록을 위해 상품상세보기 페이지에서 업로드페이지로 이동 (관리자만 가능)
+	// Going to the upload page from the product details page to register new product. administrator only has this right. 
 	@GetMapping("/upload")
 	public String upload(@ModelAttribute("newProductDTO") ProductDTO newProductDTO) {
 
 		return "product/upload";
 	}
 
-	// 4-2. 
+	// 5. 2) 상품 업로드완료 버튼을 눌르고 새상품 등록을 진행
 	@PostMapping("/upload_proc")
 	public String addProduct(@Valid @ModelAttribute("newProductDTO") ProductDTO newProductDTO, BindingResult result,
 			MultipartFile product_image_file, Model model) {
@@ -145,17 +146,20 @@ public class ProductController {
 		} else if (!(newProductDTO.getProduct_price() instanceof Integer)) {
 
 			model.addAttribute("priceErrorMessasge", "가격은 숫자만 입력가능합니다.");
+
 			return "product/upload";
 
 		} else {
 
 			productService.addProduct(newProductDTO);
+			
 			return "redirect:/product/product_by_category?category_idx=" + newProductDTO.getCategory_idx();
 
 		}
 
 	}
 
+	// 5. 3) 등록된 상품정보를 수정하기 위해서 상품수정 페이지로 이동
 	@GetMapping("/modify")
 	public String modify(@RequestParam("category_idx") int category_idx, @RequestParam("product_idx") int product_idx,
 			@ModelAttribute("modifyProductDTO") ProductDTO modifyProductDTO, Model model) {
@@ -175,7 +179,7 @@ public class ProductController {
 		return "product/modify";
 	}
 
-	// 5-2. ?��?��?��면서
+	// 5. 4) 상품수정페이지에서 상품수정 버튼 누른다. 
 	@PostMapping("/modify_proc")
 	public String modifyProc(@Valid @ModelAttribute("modifyProductDTO") ProductDTO modifyProductDTO,
 			BindingResult result, Model model) {
@@ -183,6 +187,7 @@ public class ProductController {
 		if (result.hasErrors()) {
 			return "product/modify";
 		}
+		
 		productService.modify(modifyProductDTO);
 
 		return "redirect:/product/product_by_category?category_idx=" + modifyProductDTO.getCategory_idx();

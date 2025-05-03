@@ -31,7 +31,7 @@ public class MemberDTO {
 
 	private String member_tel;
 	private String member_address;
-	
+
 	private int postcode;
 
 	private String question;
@@ -39,17 +39,24 @@ public class MemberDTO {
 
 	private Date registerDate;
 
+	private boolean memberLogin;
+	
 	private boolean inputMemberID;
 	private boolean inputMemberEmail;
-
-	private boolean memberLogin;
 
 	public MemberDTO() {
 		this.inputMemberID = false;
 		this.inputMemberEmail = false;
 	}
 
-	private String keyword;
+	// 관리자 모드로 로그인 시(ID: admin , Password: 1111) 회원관리페이지에서 검색할 경우 필요한 속성
+	// In case that Signing in as administrator, the required properties are
+	// displayed when Administrator searches specific user's information on the member management page.
+	
+	// Type은 검색할 대상이 "아이디"인지"이름"인지
 	private String type;
+	
+	// Keyword 검색 대상의 이름
+	private String keyword;
 
 }

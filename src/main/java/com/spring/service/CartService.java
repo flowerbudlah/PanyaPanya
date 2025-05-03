@@ -74,11 +74,12 @@ public class CartService {
 		if (orderPaymentList.size() == 0) {
 			return null;
 		}
+
 		return orderPaymentList;
 	}
 
-	public List<OrderListDTO> allInformationAboutOrder(OrderDTO idAndOrderIdxOrderDTO) {
-		return cartDAO.allInformationAboutOrder(idAndOrderIdxOrderDTO);
+	public List<OrderListDTO> allInformationAboutOrder(String order_idx) {
+		return cartDAO.allInformationAboutOrder(order_idx);
 	}
 
 }

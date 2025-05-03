@@ -8,7 +8,6 @@ import lombok.Data;
 public class OrderListDTO {
 
 	private String order_idx;
-
 	private String member_id;
 	private int paymentPrice;
 
@@ -28,7 +27,7 @@ public class OrderListDTO {
 
 	private int order_detail_idx;
 	private int product_idx;
-	private int amount; // 구매수량
+	private int amount;
 
 	private String product_name;
 	private int product_price;

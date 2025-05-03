@@ -4,7 +4,7 @@
 <mapper namespace="cart">
 
 	<!-- 1. 장바구니에 있는 물건 검사
-		장바구니 테이블에서 count(*)가 0이면 그 물건은 장바구니에 없다는 의미로 false를 반환하고, 
+		장바구니 테이블에서 count(*)가 0이면 그 물건은 장바구니에 없다는 의미로 false를 반환하고,
 		이미 장바구니에 담겨있는 물건이면 true를 반환한다.
 		Oracle SQL Developer에서는 
 		select decode(count(*), 0, 'false', 'true') 
@@ -46,9 +46,7 @@
 
 	<!-- 4. 장바구니 안에있는 특정 물건 무리들 비우기(물건 삭제) -->
 	<delete id="delete" parameterType="java.lang.Integer">
-		delete
-		from cart_table
-		where cart_idx = #{cart_idx}
+		delete from cart_table where cart_idx = #{cart_idx}
 	</delete>
 
 	<!-- 5. 내 장바구니 안에 실려있는 물품의 가격합계 -->
@@ -63,12 +61,10 @@
 		on p.product_idx = c.product_idx
 		where c.member_id = #{member_id}
 	</select>
-	
+
 	<!-- 6. 장바구니 안에있는 특정 물품의 수량을 변경할 경우 총액변경 -->
-	<update id="updateAmount" parameterType="com.spring.dto.CartDTO">
-		update cart_table
-		set amount = #{amount}
-		where cart_idx = #{cart_idx}
+	<update id="updateAmount" parameterType = "com.spring.dto.CartDTO">
+		update cart_table set amount = #{amount} where cart_idx = #{cart_idx}
 	</update>
 	
 	<!-- 7. 결제 (paymentPrice 결제금액) -->
@@ -90,16 +86,12 @@
 
 	<!-- 9. 카트 비우기 (결제를 완료하면, 특정회원의 장바구니 안에있는 물건을 삭제한다.)-->
 	<delete id="emptyMyCart" parameterType="java.lang.String">
-		delete
-		from cart_table
-		where member_id = #{member_id}
+		delete from cart_table where member_id = #{member_id}
 	</delete>
 
 	<!-- 10. 특정 회원의 결제목록 -->
 	<select id="orderPaymentList" parameterType="java.lang.String" resultType="com.spring.dto.OrderDTO">
-		select *
-		from order_table
-		where member_id = #{member_id}
+		select * from order_table where member_id = #{member_id}
 	</select>
 
 	<!-- 11. 상품테이블, 결제테이블, 결제상품상세보기 테이블 합쳐서 -->
@@ -112,8 +104,8 @@
 			d.order_detail_idx, d.amount, g.product_name, g.product_price,
 			g.product_img
 		from (order_table o) inner join (order_detail_table d) 
-		on (o.order_idx = d.order_idx) 
-							inner join (product_table g) 
+		on (o.order_idx = d.order_idx)
+							inner join (product_table g)
 		on (d.product_idx = g.product_idx)
 		where o.order_idx = #{order_idx}
 	</select>

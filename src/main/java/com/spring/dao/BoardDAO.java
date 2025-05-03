@@ -20,7 +20,7 @@ public class BoardDAO {
 		List<PostDTO> postList = sqlSessionTemplate.selectList("board.getPostList", board_idx, rowBounds);
 		return postList;
 	}
-	
+
 	// 1. 2) 게시판 이름 가져오기
 	public String getBoardName(int board_idx) {
 		String board_name = sqlSessionTemplate.selectOne("board.getBoardName", board_idx);
@@ -32,42 +32,44 @@ public class BoardDAO {
 		int postCnt = sqlSessionTemplate.selectOne("board.getPostCnt", post_board_idx);
 		return postCnt;
 	}
-	
-	// 2. 글쓰기(Adding a post)
-	public void addPostInfo(PostDTO writePostDTO) {
-		sqlSessionTemplate.insert("board.addPostInfo", writePostDTO);
+
+	// 1. 4) 특정 글 검색
+	public List<PostDTO> selectSearchList(PostDTO searchPostDTO, RowBounds rowBounds) {
+		return sqlSessionTemplate.selectList("board.selectSearchList", searchPostDTO, rowBounds);
 	}
 
-
-
+	// 1. 5) 특정글 검색결과수
 	public int searchResultCount(PostDTO searchPostDTO) {
 		int search_result_count = sqlSessionTemplate.selectOne("board.searchResultCount", searchPostDTO);
 		return search_result_count;
 	}
 
-	public List<PostDTO> selectSearchList(PostDTO searchPostDTO, RowBounds rowBounds) {
-		return sqlSessionTemplate.selectList("board.selectSearchList", searchPostDTO, rowBounds);
+	// 2. 글쓰기 Creating a post
+	public void addPostInfo(PostDTO writePostDTO) {
+		sqlSessionTemplate.insert("board.addPostInfo", writePostDTO);
 	}
 
+	// 3. 1) 글 읽기 Reading a post
 	public PostDTO getPostInfo(int post_idx) {
 		PostDTO readPostDTO = sqlSessionTemplate.selectOne("board.getPostInfo", post_idx);
 		return readPostDTO;
 	}
 
-	// 글 수정하기
+	// 3. 2) 조회수 증가
+	public void viewCount(int post_idx) {
+		sqlSessionTemplate.update("board.viewCount", post_idx);
+	}
+
+	// 4. 글 수정하기 Updating the post
 	public void modifyPostInfo(PostDTO modifyPostDTO) {
 		sqlSessionTemplate.update("board.modifyPostInfo", modifyPostDTO);
 	}
 
-	// 글 삭제(Deleting)
+	// 5. 글 삭제 Deleting the post
 	public void delete(int post_idx) {
+		// 특정한 글에 달린 댓글도 삭제
 		sqlSessionTemplate.delete("board.replyDelete", post_idx);
 		sqlSessionTemplate.delete("board.delete", post_idx);
-	}
-
-	// 조회수 
-	public void viewCount(int post_idx) {
-		sqlSessionTemplate.update("board.viewCount", post_idx);
 	}
 
 }

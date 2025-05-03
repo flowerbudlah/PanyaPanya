@@ -17,9 +17,9 @@
 <form action="${root }member/find_id" method="post">
 	<div>
 		<p>아래에 회원가입시 입력하신 이메일 주소를 입력해주세요!<br>
-			<center>
-				<input class="form-control" style="width:300px;" type="text" id="member_email" name="member_email" required>
-			</center>
+		<center>
+			<input class="form-control" style="width:300px;" type="text" id="member_email" name="member_email" required>
+		</center>
 		</p>
 		<br>
 		<p>

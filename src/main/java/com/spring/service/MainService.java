@@ -15,6 +15,7 @@ public class MainService {
 	@Autowired
 	private BoardDAO boardDAO;
 
+	// 메인화면에 있는 게시판 2개
 	public List<PostDTO> getMainList(int board_idx) {
 		RowBounds rowBounds = new RowBounds(0, 5);
 		List<PostDTO> mainList = boardDAO.getPostList(board_idx, rowBounds);

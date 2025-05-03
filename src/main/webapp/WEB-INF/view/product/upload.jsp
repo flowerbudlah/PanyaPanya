@@ -47,9 +47,7 @@
 					<div class="form-group">
 						<form:label path="product_price">단가: </form:label>
 						<form:input path="product_price" class="form-control" />
-						<div style="color: red;">
-							${priceErrorMessasge}
-						</div>
+						<div style="color: red;">${priceErrorMessasge}</div>
 					</div>
 					<div class="form-group">
 						<form:label path="storage_method">보관방법: </form:label>
@@ -61,21 +59,21 @@
 						<form:input path="expiration_date" class="form-control" />
 						<form:errors path="expiration_date" style="color:red;" />
 					</div>
-					<%-- 상품등록이기 때문에 사진등록은 필수 --%>
+					<%-- 상품등록이기 때문에 사진등록은 필수! 
+					Photo registration is required because this is the registration page for a specific product. --%>
 					<div class="form-group">
 						<form:label path="product_image_file">첨부 이미지</form:label>
-						<form:input type="file" path="product_image_file" class="form-control" accept="image/*" />
-						<%-- 이미지 업로드를 하지않는 경우는 에러메시지가 등장하여 다음단계로 진행불가 --%>
-						<div style="color: red;">
-							${imageUploadingErrorMessage}
-						</div>
+						<form:input type="file" path="product_image_file"
+							class="form-control" accept="image/*" />
+						<%-- 이미지 업로드를 하지않는 경우는 에러메시지가 등장하여 다음단계로 진행불가 
+						If you do not upload an image, an error message will appear and you will not be able to proceed to the next step. --%>
+						<div style="color: red;">${imageUploadingErrorMessage}</div>
 					</div>
 					<div class="form-group">
 						<div class="text-right">
 							<form:button class="btn btn-danger">상품등록완료</form:button>
 						</div>
 					</div>
-					
 				</form:form>
 			</div>
 		</div>

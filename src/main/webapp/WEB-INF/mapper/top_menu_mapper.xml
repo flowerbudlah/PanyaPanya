@@ -5,9 +5,7 @@
 
 <mapper namespace="topmenu">
 	<select id="get_topmenu_list" resultType="com.spring.dto.BoardDTO" >
-		select * 
-		from board_table 
-		order by board_idx
+		select * from board_table order by board_idx
 	</select>
 </mapper>
  

@@ -46,9 +46,11 @@ public class MemberController {
 	public String joinProc(@Valid @ModelAttribute("joinMemberDTO") MemberDTO joinMemberDTO, BindingResult result) {
 
 		if (result.hasErrors()) {
+
 			return "member/join";
 
 		} else {
+
 			memberService.addMemberInfo(joinMemberDTO);
 			return "member/join_success";
 
@@ -144,8 +146,7 @@ public class MemberController {
 
 	// 5. 2) 분실한 비밀번호를 찾기위해서 ID를 입력하고 본인 확인 질문을 가져온다. 
 	@RequestMapping(value = "/find_password_answer", method = RequestMethod.POST)
-	public String find_password_answer(HttpServletResponse response, @RequestParam("member_id") String member_id,
-			Model model) throws Exception {
+	public String find_password_answer(HttpServletResponse response, @RequestParam("member_id") String member_id, Model model) throws Exception {
 
 		model.addAttribute("memberDTO", memberService.find_question(response, member_id));
 		return "/member/find_password_answer";

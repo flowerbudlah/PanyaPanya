@@ -15,7 +15,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-	//아이디 중복체크하는 제이쿼리와 Ajax
+
+	// ID 중복체크하는 제이쿼리와 Ajax
 	function checkID() {
 		const member_id = $("#member_id").val()
 
@@ -41,11 +42,12 @@
 			}
 		})
 	}
+
 	function resetInputMemberID() {
 		$("#inputMemberID").val('false');
 	}
 
-	//Emaill 중복체크하는 제이쿼리와 Ajax
+	// E-mail 중복체크하는 제이쿼리와 Ajax
 	function checkEmail() {
 		const member_email = $("#member_email").val()
 
@@ -83,12 +85,45 @@
 	function resetInputMemberEmail() {
 		$("#inputMemberEmail").val('false');
 	}
+	
+	<%-- 우편번호 --%>
+	function postcode() {
+		new daum.Postcode({
+			oncomplete : function(data) {
+				var roadAddr = data.roadAddress; // 도로명 주소 변수
+				var extraRoadAddr = ''; // 참고 항목 변수
+
+				// 법정동명이 있을 경우 추가한다. (법정리는 제외) 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+				if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+					extraRoadAddr += data.bname;
+				}
+				// 건물명이 있고, 공동주택일 경우 추가한다.
+				if (data.buildingName !== '' && data.apartment === 'Y') {
+					extraRoadAddr += (extraRoadAddr !== '' ? ', '
+							+ data.buildingName : data.buildingName);
+				}
+				// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+				if (extraRoadAddr !== '') {
+					extraRoadAddr = ' (' + extraRoadAddr + ')';
+				}
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+				document.getElementById('postcode').value = data.zonecode;
+				document.getElementById("roadAddress").value = roadAddr;
+			}
+		}).open();
+	}
+
+	$("#searchAdd").click(function(event) {
+		event.preventDefault();
+		postcode();
+	});
+
 </script>
 </head>
 <body>
-	<c:import url="/WEB-INF/view/include/head_meta.jsp" />
-	<c:import url="/WEB-INF/view/include/top_menu.jsp" />
-	<!-- 회원가입 폼 -->
+<c:import url="/WEB-INF/view/include/head_meta.jsp" />
+<c:import url="/WEB-INF/view/include/top_menu.jsp" />
+<!-- 회원가입 폼 -->
 	<div class="container" style="margin-top: 50px; margin-bottom: 50px;">
 		<div class="row">
 			<div class="col-sm-3"></div>
@@ -96,8 +131,7 @@
 				<h5>회원가입</h5>
 				<div class="card shadow-none">
 					<div class="card-body">
-						<form:form action="${root }member/join_proc" method="post"
-							modelAttribute="joinMemberDTO" id="joinMemberDTO">
+						<form:form action="${root }member/join_proc" method="post" modelAttribute="joinMemberDTO" id="joinMemberDTO">
 							<form:hidden path="inputMemberID" />
 							<form:hidden path="inputMemberEmail" />
 							<div class="form-group">
@@ -105,19 +139,18 @@
 								<form:input path="member_name" class="form-control" />
 								<form:errors path="member_name" style="color:red;" />
 							</div>
-							<%--아이디 입력 시작 --%>
+							<%-- ID 입력 시작 --%>
 							<div class="form-group">
 								<form:label path="member_id">아이디</form:label>
 								<div class="input-group">
-									<form:input path="member_id" class="form-control"
-										onkeypress="resetInputMemberID()" />
+									<form:input path="member_id" class="form-control" onkeypress="resetInputMemberID()" />
 									<div class="input-group-append">
 										<button type="button" class="btn btn-danger" onClick="checkID();">아이디 중복확인</button>
 									</div>
 								</div>
 								<form:errors path="member_id" style="color:red;" />
 							</div>
-							<%--아이디 입력 끝 --%>
+							<%-- ID 입력 끝 --%>
 							<div class="form-group">
 								<form:label path="member_pw">비밀번호</form:label>
 								<form:password path="member_pw" class="form-control" />
@@ -132,22 +165,18 @@
 								<form:label path="member_tel">연락처</form:label>
 								<form:input path="member_tel" class="form-control" />
 							</div>
-							<%--이메일중복 --%>
+							<%-- E-mail --%>
 							<div class="form-group">
 								<form:label path="member_email">E-mail</form:label>
-
 								<div class="input-group">
-									<form:input type="email" path="member_email"
-										class="form-control" onkeypress="resetInputMemberEmail()" />
+									<form:input type="email" path="member_email" class="form-control" onkeypress="resetInputMemberEmail()" />
 									<div class="input-group-append">
-										<input type="button" class="btn btn-danger"
-											onClick="checkEmail();" value="이메일 중복확인" />
+										<input type="button" class="btn btn-danger" onClick="checkEmail();" value="이메일 중복확인" />
 									</div>
 								</div>
-
 								<form:errors path="member_email" style="color:red;" />
 							</div>
-							<%--주소입력 --%>
+							<%-- 주소입력 --%>
 							<div class="form-group">
 								<form:label path="member_address">주소</form:label>
 								<div class="input-group-append">
@@ -156,7 +185,7 @@
 								</div>
 								<form:input path="member_address" placeholder="상세주소" id="roadAddress" class="form-control" />
 							</div>
-							<!-- 아이디 비번 분실시 시작-->
+							<%-- Security question and answer used when a user forgets their ID or password --%>
 							<div class="form-group">
 								<form:label path="question">아이디 또는 비밀번호 분실시 질문</form:label>
 								<form:select path="question" class="form-control">
@@ -171,10 +200,8 @@
 								<form:label path="answer">위 질문에 대한 답</form:label>
 								<form:input path="answer" class="form-control" />
 							</div>
-							<!-- 아이디 비번 분실시 끝 -->
 							<div class="text-right" style="margin-top: 100px">
-								<form:button class="btn btn-danger"
-									onclick="javascript:join_success();">회원가입 완료</form:button>
+								<form:button class="btn btn-danger" onclick="javascript:join_success();">회원가입 완료</form:button>
 							</div>
 						</form:form>
 					</div>
@@ -183,41 +210,7 @@
 			<div class="col-sm-3"></div>
 		</div>
 	</div>
-	<!-- 하단정보 -->
-	<c:import url="/WEB-INF/view/include/bottom_info.jsp" />
-	<script>
-		
-	<%--우편번호 --%>
-		function postcode() {
-			new daum.Postcode({
-				oncomplete : function(data) {
-					var roadAddr = data.roadAddress; // 도로명 주소 변수
-					var extraRoadAddr = ''; // 참고 항목 변수
-
-					// 법정동명이 있을 경우 추가한다. (법정리는 제외) 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-					if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-						extraRoadAddr += data.bname;
-					}
-					// 건물명이 있고, 공동주택일 경우 추가한다.
-					if (data.buildingName !== '' && data.apartment === 'Y') {
-						extraRoadAddr += (extraRoadAddr !== '' ? ', '
-								+ data.buildingName : data.buildingName);
-					}
-					// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-					if (extraRoadAddr !== '') {
-						extraRoadAddr = ' (' + extraRoadAddr + ')';
-					}
-					// 우편번호와 주소 정보를 해당 필드에 넣는다.
-					document.getElementById('postcode').value = data.zonecode;
-					document.getElementById("roadAddress").value = roadAddr;
-				}
-			}).open();
-		}
-
-		$("#searchAdd").click(function(event) {
-			event.preventDefault();
-			postcode();
-		});
-	</script>
+<!-- The Bottom information Section -->
+<c:import url="/WEB-INF/view/include/bottom_info.jsp" />
 </body>
 </html>
