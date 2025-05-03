@@ -8,7 +8,7 @@
 
 1. 프로젝트 이름: 팡야팡야   
 3. 제작 기간: 2021년 05월 17일 ~ 2021년 06월 25일 (약 1달)
-4. 사이트 동작 영상: ttps://drive.google.com/file/d/1uBYLj8p66uVjzaqrXTzeIdeY7HEAjzYt/view
+4. 사이트 동작 영상: <a href="https://drive.google.com/file/d/1uBYLj8p66uVjzaqrXTzeIdeY7HEAjzYt/view" target='_blank'>https://drive.google.com/file/d/1uBYLj8p66uVjzaqrXTzeIdeY7HEAjzYt/view</a>
 5. 사용 기술: 
 6. 기능 구현: 
 7. 핵심 기능 설명 & 트러블 슈팅
