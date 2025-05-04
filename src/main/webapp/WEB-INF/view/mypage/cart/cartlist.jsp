@@ -62,8 +62,8 @@ h5:active {
 								<td>${vo.cart_idx }</td>
 								<td>
 									<a href="${root }product/product_detail?product_idx=${vo.product_idx}">
+										<!-- In case that the product is uploaded within this site. -->
 										<c:choose>
-											<!-- 이 웹사이트 안에서 업로드한 상품인경우 In case that the product is uploaded within this website. -->
 											<c:when test="${fn:startsWith(vo.product_img, 'https://i.imgur.com/')}">
 												<img src="${vo.product_img}" width="80px" height="80px" alt="${vo.product_name}">
 											</c:when>
