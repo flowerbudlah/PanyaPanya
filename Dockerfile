@@ -8,7 +8,7 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 COPY target/PanyaPanya-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 
 # 4. 포트 오픈
-EXPOSE 8080
+EXPOSE 8090
 
 # 5. 톰캣 실행
 CMD ["catalina.sh", "run"]
