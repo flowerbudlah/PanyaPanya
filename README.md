@@ -4,6 +4,21 @@
 이후 지속적인 유지보수와 기능 개선을 거쳐, 최근에는 웹 호스팅을 통해 실제로 배포까지 완료하였습니다.<br>
 이번에 그 과정을 정리하며, 학습과 성장의 흔적이 담긴 의미 있는 프로젝트로 다시 소개하게 되었습니다.<br>
 비록 실 결제 기능(PayPal 등)은 포함되어 있지 않지만, 기본적인 쇼핑몰 구조와 사용자 기능을 갖춘 웹사이트입니다.
+<h3>📝 Portfolio Overview</h3>
+PanyaPanya is a full-stack web application developed as a personal project to demonstrate my skills in both front-end and back-end development.
+<h3>🔧 Tech Stack</h3>
+1. Front-End: JSP, HTML, CSS, Bootstrap, jQuery<br>
+2. Back-End: Spring MVC Java, JSP<br>
+3. Database: MySQL Workbench 8.0 CE<br>
+4. Deployment: Docker, Railway<br>
+5. Tools: Eclipse IDE for Enterprise Java and Web Developers - 2021-03, Maven, GitHub, Git
+<h3>💡 Key Features</h3>
+1. Admin and user login system<br>
+2. Product registration and management<br>
+3. Image upload via local and server environments<br>
+4. Bulletin board with post and reply (threaded comment) features<br>
+5. Responsive design using Bootstrap carousel and cards<br><br>
+This project was designed to simulate a small-scale e-commerce and community platform. Through this application, I aimed to strengthen my understanding of MVC architecture, session management, and deployment using Docker containers on cloud platforms.
 <hr/>
 
 1. 프로젝트 이름: 팡야팡야
