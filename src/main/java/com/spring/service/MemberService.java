@@ -120,6 +120,7 @@ public class MemberService {
 		memberDAO.modifyMemberInfo(modifyMemberDTO);
 	}
 
+	// 4. 1) 로그인ID 분실한 경우, 회원가입시 입력한 이메일을 입력하여 ID를 찾는다. 
 	public String find_id(HttpServletResponse response, String member_email) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -142,31 +143,38 @@ public class MemberService {
 		}
 	}
 
+	// 5. 1) 로그인 비밀번호를 분실했을 경우, 우선 ID를 입력하여 본인확인 질문을 가져온다. 
 	public MemberDTO find_question(HttpServletResponse response, String member_id) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 
 		MemberDTO memberDTO = memberDAO.find_question(member_id);
 
-		// 비밀번호가 맞지않는 경우
+		// 존재하지 않는 ID를 입력한 경우
 		if (memberDTO == null) {
 			out.println("<script>");
-			out.println("alert('잘못된 답을 입력하셨습니다. 다시한번 확인하시고 입력해주세요!');");
+			out.println("alert('잘못된 답을 입력하셨습니다. 다시한번 확인하시고 입력해주세요! You entered an incorrect answer. Please check and enter it again!');");
 			out.println("history.go(-1);");
 			out.println("</script>");
 			out.close();
+			
+			// 가져올 본인확인 질문도 없다.
 			return null;
+		
+		// 존재하는 ID를 입력한 경우
 		} else {
+			// 본인확인용 질문을 가져온다. 
 			return memberDTO;
 		}
 	}
 
+	// 5. 2) 본인확인 질문에 제대로 응답했다면 비밀번호를 알려준다.
 	public MemberDTO find_password(MemberDTO answerAndId) {
-	
+
 		return memberDAO.find_password(answerAndId);
 	}
 
-	// 4. 회원탈퇴
+	// 6. 회원탈퇴
 	public void delete(MemberDTO deleteMemberDTO) throws Exception {
 		memberDAO.delete(deleteMemberDTO);
 	}

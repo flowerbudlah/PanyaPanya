@@ -74,6 +74,7 @@ public class ProductController {
 	public String write(ProductReplyDTO writeProductReplyDTO, @RequestParam("product_idx") int product_idx, Model model) throws Exception {
 
 		model.addAttribute("product_idx", product_idx);
+
 		productService.write(writeProductReplyDTO);
 
 		return "redirect:/product/product_detail?product_idx=" + writeProductReplyDTO.getProduct_idx();
@@ -187,7 +188,7 @@ public class ProductController {
 		if (result.hasErrors()) {
 			return "product/modify";
 		}
-		
+
 		productService.modify(modifyProductDTO);
 
 		return "redirect:/product/product_by_category?category_idx=" + modifyProductDTO.getCategory_idx();

@@ -141,7 +141,7 @@
 		if (obj != null) {
 			var result = obj.result;
 
-			if (result == "SUCCESS") {
+			if (result == "successOfRemovingTheComment") {
 				history.go(0);
 				alert("댓글 삭제를 성공하였습니다.");
 				return;

@@ -37,8 +37,7 @@ public class AdminController {
 	// 1. 2) 주문, 결제, 배송정보을 제공하는 관리자 페이지 안에서 배송상황 변경
 	// Changing delivery status In Administrator Only page providing order, payment, and delivery information. 
 	@PostMapping("/change")
-	public String changeDeliveryCircumstance(
-			@ModelAttribute("changeDeliveryOrderDTO") OrderDTO changeDeliveryOrderDTO) {
+	public String changeDeliveryCircumstance(@ModelAttribute("changeDeliveryOrderDTO") OrderDTO changeDeliveryOrderDTO) {
 
 		adminService.changeDeliveryCircumstance(changeDeliveryOrderDTO);
 

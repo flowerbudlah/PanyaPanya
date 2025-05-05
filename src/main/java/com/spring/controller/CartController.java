@@ -1,10 +1,13 @@
 package com.spring.controller;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +37,14 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 
-	// 1. 장바구니 안에 물건을 추가하는 처리(Adding items to your shopping cart.)
+	// 1. 장바구니 안에 물건을 추가하는 처리 (Adding items to your shopping cart.)
 	@PostMapping("/cart/")
 	public @ResponseBody String addGoodsInCart(CartDTO cartDTO, HttpSession session) {
 
 		MemberDTO loginMemberDTO = (MemberDTO) session.getAttribute("loginMemberDTO");
 		cartDTO.setMember_id(loginMemberDTO.getMember_id());
 
+		// 장바구니 안에 이미 그 물건이 있는지 없는지 확인
 		boolean istAlreadyExisted = cartService.findCartGoods(cartDTO);
 		System.out.println("istAlreadyExisted : " + istAlreadyExisted);
 
@@ -130,10 +134,16 @@ public class CartController {
 
 	// 6. 로그인한 회원의 주문정보 페이지(주문·결제·배송 정보)로 이동
 	@GetMapping("/order/orderInfo")
-	public String orderPaymentList(HttpSession session, Model model) {
+	public String orderPaymentList(HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) throws IOException {
 
 		MemberDTO loginMemberDTO = (MemberDTO) session.getAttribute("loginMemberDTO");
 		String member_id = loginMemberDTO.getMember_id();
+		
+		// 세션이 만료되어서 로그인이 풀린경우 (If user's session expires and The user are logged out.)
+		if (session.getAttribute("loginMemberDTO") == null) {
+		    response.sendRedirect("/member/login");
+		    return "redirect:/member/login";
+		}
 
 		List<OrderDTO> orderPaymentList = cartService.orderPaymentList(member_id);
 		model.addAttribute("orderPaymentList", orderPaymentList);

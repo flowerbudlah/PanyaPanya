@@ -58,7 +58,7 @@ public class BoardService {
 		return board_name;
 	}
 	
-	// 1. 3) 
+	// 1. 3) 게시판 메인화면에서의 페이지 처리
 	public PageDTO getPostCnt(int post_board_idx, int currentPage) {
 
 		int postCnt = boardDAO.getPostCnt(post_board_idx);
@@ -67,7 +67,7 @@ public class BoardService {
 		return pageDTO;
 	}
 
-	// 1. 4)
+	// 1. 4) 검색된 게시글 목록
 	public List<PostDTO> selectSearchList(PostDTO searchPostDTO, int page) {
 
 		int start = (page - 1) * page_listcnt;
@@ -78,13 +78,13 @@ public class BoardService {
 		return searchList;
 	}
 
-	// 1. 5)
+	// 1. 5) 검색된 게시글 수(결과 게시글)
 	public int searchResultCount(PostDTO searchPostDTO) {
 		int search_result_count = boardDAO.searchResultCount(searchPostDTO);
 		return search_result_count;
 	}
 
-	// 1. 6) 
+	// 1. 6) 게시판 메인화면에서 특정게시물을 검색한 후의 화면에서의 페이지 처리
 	public PageDTO searchListCount(PostDTO searchPostDTO, int currentPage) {
 
 		int search_result_count = boardDAO.searchResultCount(searchPostDTO);
@@ -165,7 +165,7 @@ public class BoardService {
 
 		}
 
-		// 배포 전 로컬에서 이미지 파일을 업로드 했을때 함수
+		// 배포 전 로컬에서 이미지 파일을 업로드 했을 때의 함수
 		// String file_name = System.currentTimeMillis() + "_" +
 		// upload_file.getOriginalFilename();
 		// try {

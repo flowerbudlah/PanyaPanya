@@ -27,10 +27,10 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	<!-- 프로젝트에서 사용하는 정적 파일(ex. 이미지, 사운드, 동영상, js, css 등 ) 경로 설정하기 -->
+	<!-- Setting the path to static files (ex. image, sound, video, js, css, etc.) used in the project -->
 	<resources mapping="/**" location="/resources/" />
 
-	<!-- properties 파일 내용을 사용할 수 있도록 Bean 등록 -->
+	<!-- Registering a Bean to make content of property file(.properties) available -->
 	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<beans:property name="locations">
 			<beans:list>
@@ -54,12 +54,12 @@
 		<beans:property name="mapperLocations" value="/WEB-INF/mapper/*.xml" />
 	</beans:bean>
 
-	<!-- 쿼리문 실행 Bean (Mapper 관리) -->
+	<!-- The Bean that make a query execute (Mapper management) -->
 	<beans:bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSessionTemplate">
 		<beans:constructor-arg index="0" ref="sqlSession" />
 	</beans:bean>
 	
-	<!-- Interceptor 등록하기 -->
+	<!-- Registering an interceptor -->
 	<interceptors>
 		<interceptor>
 			<mapping path="/**" />
@@ -78,7 +78,7 @@
 		</interceptor>
 	</interceptors>
 
-	<!-- Message Source 등록하기 -->
+	<!-- Registering the Message Source -->
 	<beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource" id="messageSource">
 		<beans:property name="basenames">
 			<beans:list>
@@ -87,12 +87,12 @@
 		</beans:property>
 	</beans:bean>
 
-	<!-- Message 에 접근하기 위한 Accessor 등록하기 -->
+	<!-- Registering an Accessor to access the Message -->
 	<beans:bean class="org.springframework.context.support.MessageSourceAccessor">
 		<beans:constructor-arg ref="messageSource" />
 	</beans:bean>
 
-	<!-- enctype="multipart/form-data를 설정했을 때 data가 정상적으로 전송되게 함 -->
+	<!-- enctype=multipart/form-data를 설정했을 때 data가 정상적으로 전송되게 함 -->
 	<beans:bean class="org.springframework.web.multipart.support.StandardServletMultipartResolver" id="multipartResolver" />
 
 </beans:beans>
