@@ -21,13 +21,14 @@ This project was designed to simulate a small-scale e-commerce and community pla
 베이커리 쇼핑몰을 콘셉트로, 게시판과 장바구니 등 핵심 기능을 갖춘 웹사이트를 구현하였으나, 당시에는 배포 방법을 몰라 일시적으로 개발을 중단하기도 했습니다.<br>
 이후 지속적인 유지보수와 기능 개선을 거쳐, 최근에는 웹 호스팅을 통해 실제로 배포까지 완료하였습니다.<br>
 이번에 그 과정을 정리하며, 학습과 성장의 흔적이 담긴 의미 있는 프로젝트로 다시 소개하게 되었습니다.<br>
-비록 실 결제 기능(PayPal 등)은 포함되어 있지 않지만, 기본적인 쇼핑몰 구조와 사용자 기능을 갖춘 웹사이트입니다.<br>
-1. 프로젝트 이름: 팡야팡야<br>
-2. URL: <a href="https://panyapanya-production.up.railway.app/">https://panyapanya-production.up.railway.app/</a><br>
+비록 실 결제 기능(PayPal 등)은 포함되어 있지 않지만, 기본적인 쇼핑몰 구조와 사용자 기능을 갖춘 웹사이트입니다.<br><br>
+1. 프로젝트 이름: 팡야팡야<br><br>
+2. URL: <a href="https://panyapanya-production.up.railway.app/">https://panyapanya-production.up.railway.app/</a><br><br>
 3. 제작 기간: 2021년 05월 17일 ~ 2021년 06월 25일 (약 1달)<br>
-  그 후 2025년까지 걸쳐 유지보수와 기능 개선을 거쳐왔고, 웹 호스팅 배포는 2025년 04월 초에 완료되었습니다. <br>
-4. 사이트 동작 영상: <a href="https://drive.google.com/file/d/1uBYLj8p66uVjzaqrXTzeIdeY7HEAjzYt/view" target='_blank'>https://drive.google.com/file/d/1uBYLj8p66uVjzaqrXTzeIdeY7HEAjzYt/view</a><br>
-5. 사용 기술<br>1) Back-end<br>
+  그 후 2025년까지 걸쳐 유지보수와 기능 개선을 거쳐왔고, 웹 호스팅 배포는 2025년 04월 초에 완료되었습니다. <br><br>
+4. 사이트 동작 영상: <a href="https://drive.google.com/file/d/1uBYLj8p66uVjzaqrXTzeIdeY7HEAjzYt/view" target='_blank'>https://drive.google.com/file/d/1uBYLj8p66uVjzaqrXTzeIdeY7HEAjzYt/view</a><br><br>
+5. 사용 기술<br>
+1) Back-end<br>
 (1) 언어 & 런타임<br>
 Java 1.8 (Java 8)<br>
 (2) 프레임워크<br>
@@ -59,10 +60,9 @@ ii) JSTL (JSP Standard Tag Library)<br>
 iii) Bootstrap 4<br>
 vi) jQuery<br>
 v) Google Fonts (Single Day 폰트)<br>
-vi) Custom CSS<br>
-
-7. 주요 기능 구현<br>1) 로그인<br>2) 회원가입<br>
+vi) Custom CSS<br><br>
+6. 주요 기능 구현<br>1) 로그인<br>2) 회원가입<br>
 (1) ID, Email 중복확인<br>
-(2) 유효성 검사(BindingResult)<br>3) 회원정보수정<br>4) 상품진열, 장바구니<br>5) CRUD 게시판, 게시글 검색기능, 이미지 업로드 기능, 댓글달기<br>
-8. 추가예정기능<br>1) 현재는 세션이 만료되어 로그아웃된 상태에서 요청을 보낼 경우(로그인이 풀리는 경우), 서버에서 이를 제대로 처리하지 못해 HTTP 500(내부 서버 오류)이 발생하고 있습니다.
+(2) 유효성 검사(BindingResult)<br>3) 회원정보수정<br>4) 상품진열, 장바구니<br>5) CRUD 게시판, 게시글 검색기능, 이미지 업로드 기능, 댓글달기<br><br>
+7. 추가예정기능<br>1) 현재는 세션이 만료되어 로그아웃된 상태에서 요청을 보낼 경우(로그인이 풀리는 경우), 서버에서 이를 제대로 처리하지 못해 HTTP 500(내부 서버 오류)이 발생하고 있습니다.
 이러한 문제를 개선하여, 앞으로는 세션이 만료된 경우 오류 페이지가 아닌 로그인 페이지로 자동 이동되도록 기능을 개선할 예정입니다.
