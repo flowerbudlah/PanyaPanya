@@ -1,7 +1,6 @@
 <h3>📝 Portfolio Overview</h3>
 PanyaPanya is a full-stack web application developed as a personal project to demonstrate my skills in both front-end and back-end development.
 <h3>🏠 URL: https://panyapanya-production.up.railway.app/</h3>
-<h3>🎬 Video: <a href="https://drive.google.com/file/d/1uBYLj8p66uVjzaqrXTzeIdeY7HEAjzYt/view" target='_blank'>https://drive.google.com/file/d/1uBYLj8p66uVjzaqrXTzeIdeY7HEAjzYt/view</a><br></h3>
 <h3>🔧 Tech Stack</h3>
 1. Front-End: JSP, HTML, CSS, Bootstrap, jQuery<br>
 2. Back-End: Spring MVC Java, JSP<br>
