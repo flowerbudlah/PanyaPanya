@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- 1. 1) 게시판 글 목록 가져오기(글 제목에 댓글수) -->
+	<select id="getPostList" parameterType="java.lang.Integer" resultType="com.spring.dto.PostDTO">
+		select 
+			p.post_board_idx,
+			p.post_idx,
+			p.post_subject,
+			m.member_name as post_writer_name,
+			p.post_read_count,
+			p.post_file,
+			(select count(*) from reply_table where post_idx = p.post_idx) as reply_cnt,
+			p.post_date
+		from 
+			(post_table p) inner join (panya_member_table m)
+		on 
+			p.post_writer_idx = m.member_idx 
+		where 
+			p.post_board_idx = #{board_idx}
+		order by 
+			p.post_idx DESC
+	</select>
+
+	<!-- 1. 2) 게시판 이름 가져오기 -->
+	<select id="getBoardName" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select board_name from board_table where board_idx=#{board_idx}
+	</select>
+
+	<!-- 1. 3) 전체 게시글 수 가져오기 -->
+	<select id="getPostCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from post_table where post_board_idx = #{post_board_idx}
+	</select>
+
+	<!-- 2. 글쓰기 Create -->
+	<insert id="addPostInfo" parameterType="com.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="post_idx">
+		insert into post_table(post_subject, post_text, post_file, post_writer_idx, post_board_idx, post_date, post_read_count)
+						values(#{post_subject}, #{post_text}, #{post_file}, #{post_writer_idx}, #{post_board_idx}, now(), #{post_read_count})
+	</insert>
+
+	<!-- 3. 1) 글읽기 Read -->
+	<select id="getPostInfo" parameterType="java.lang.Integer" resultType="com.spring.dto.PostDTO">
+		select
+			p.post_board_idx,
+			p.post_idx,
+			m.member_name post_writer_name,
+			p.post_subject,
+			p.post_text,
+			p.post_file,
+			p.post_writer_idx,
+			p.post_read_count,
+			p.post_date
+		from 
+			(post_table p) inner join (panya_member_table m)
+		on 
+			p.post_writer_idx = m.member_idx
+		where 
+			p.post_idx = #{post_idx}
+	</select>
+
+	<!-- 3. 2) 조회수 증가 -->
+	<update id="viewCount" parameterType="java.lang.Integer">
+		update post_table set post_read_count = post_read_count + 1 where post_idx = #{post_idx}
+	</update>
+
+	<!-- 4. 1) 글 수정 Update -->
+	<update id="modifyPostInfo" parameterType="com.spring.dto.PostDTO">
+		update post_table
+		set post_subject = #{post_subject}, post_text = #{post_text}, post_file = #{post_file, jdbcType=VARCHAR}
+		where post_idx=#{post_idx}
+	</update>
+
+	<!-- 5. 1) 게시글 삭제 Delete -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from post_table where post_idx = #{post_idx}
+	</delete>
+	
+	<!-- 5. 2) 댓글 삭제 (댓글이 달린 게시글이 삭제되면서 딸린 댓글도 함께 지워지는 것) -->
+	<delete id="replyDelete" parameterType="java.lang.Integer">
+		delete from reply_table where post_idx = #{post_idx}
+	</delete>
+
+	<!-- 6. 1) 게시글 검색 -->
+	<select id="selectSearchList" parameterType="com.spring.dto.PostDTO" resultType="com.spring.dto.PostDTO">
+		select
+			p.post_board_idx,
+			p.post_idx,
+			p.post_subject,
+			p.post_text,
+			m.member_name as post_writer_name, 
+			p.post_date,
+			p.post_read_count,
+			(select count(*) from reply_table where post_idx = p.post_idx) as reply_cnt
+		from (post_table p) inner join (panya_member_table m)
+		on (p.post_writer_idx = m.member_idx)
+		where p.post_board_idx = #{post_board_idx} and
+		<choose>
+			<when test="type!=null and type.equals('post_subject')">
+				p.post_subject like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="type!=null and type.equals('post_text')">
+				p.post_text like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="type!=null and type.equals('member_name')">
+				member_name like CONCAT('%',#{keyword},'%')
+			</when>
+		</choose>
+		order by p.post_idx DESC
+	</select>
+
+	<!-- 6. 2) 검색한 게시물 수 -->
+	<select id="searchResultCount" parameterType="com.spring.dto.PostDTO" resultType="java.lang.Integer">
+		select count(*)
+		from (post_table p) inner join (panya_member_table m)
+		on p.post_writer_idx = m.member_idx
+		where p.post_board_idx = #{post_board_idx} and
+		<choose>
+			<when test="type!=null and type.equals('post_subject')">
+				p.post_subject like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="type!=null and type.equals('post_text')">
+				p.post_text like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="type!=null and type.equals('member_name')">
+				member_name like CONCAT('%',#{keyword},'%')
+			</when>
+		</choose>
+	</select>
+
+</mapper>  

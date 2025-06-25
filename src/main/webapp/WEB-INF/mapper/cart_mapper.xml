@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+
+	<!-- 1. 장바구니에 있는 물건 검사
+		장바구니 테이블에서 count(*)가 0이면 그 물건은 장바구니에 없다는 의미로 false를 반환하고,
+		이미 장바구니에 담겨있는 물건이면 true를 반환한다.
+		Oracle SQL Developer에서는 
+		select decode(count(*), 0, 'false', 'true') 
+		from cart_table 
+		where product_idx = #{product_idx} and member_id = #{member_id}
+		My SQL에서는 아래와 같다. -->
+	<select id="findCartGoods" parameterType="com.spring.dto.CartDTO" resultType="java.lang.String">
+		select if(count(*) = 0, 'false', 'true')
+		from cart_table
+		where product_idx = #{product_idx} and member_id = #{member_id}
+	</select>
+
+	<!-- 2. 장바구니에 넣기 -->
+	<insert id="addGoodsInCart" parameterType="com.spring.dto.CartDTO">
+		insert into cart_table(member_id, product_idx, amount, regDate)
+					values(#{member_id}, #{product_idx}, #{amount}, now())
+	</insert>
+
+	<!-- 3. 내 장바구니에 있는 물건 목록 -->
+	<select id="getMyCart" resultType="com.spring.dto.CartDTO">
+		select 
+			c.cart_idx as cart_idx, 
+			c.member_id as member_id,
+			p.product_idx as product_idx,
+			m.member_name as member_name,
+			p.product_name as product_name,
+			c.amount as amount,
+			p.product_img as product_img,
+			p.product_price as price,
+			p.product_price * c.amount as totalprice,
+			c.regdate as regdate
+		from panya_member_table m, product_table p, cart_table c
+		where 
+			m.member_id = c.member_id 
+			and p.product_idx = c.product_idx 
+			and c.member_id = #{member_id}
+		order by c.cart_idx
+	</select>
+
+	<!-- 4. 장바구니 안에있는 특정 물건 무리들 비우기(물건 삭제) -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from cart_table where cart_idx = #{cart_idx}
+	</delete>
+
+	<!-- 5. 내 장바구니 안에 실려있는 물품의 가격합계 -->
+	<!-- SQL Oracle Development에서는
+		select NVL(sum(p.product_price * c.amount),0) paymentPrice 
+		from product_table p inner join cart_table c 
+		on p.product_idx = c.product_idx
+		where c.member_id = #{member_id} -->
+	<select id="sum" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select ifnull(sum(p.product_price * c.amount),0) as paymentPrice
+		from product_table p inner join cart_table c
+		on p.product_idx = c.product_idx
+		where c.member_id = #{member_id}
+	</select>
+
+	<!-- 6. 장바구니 안에있는 특정 물품의 수량을 변경할 경우 총액변경 -->
+	<update id="updateAmount" parameterType = "com.spring.dto.CartDTO">
+		update cart_table set amount = #{amount} where cart_idx = #{cart_idx}
+	</update>
+	
+	<!-- 7. 결제 (paymentPrice 결제금액) -->
+	<insert id="orderInfo" parameterType="com.spring.dto.OrderDTO">
+		insert into order_table
+		values(#{order_idx}, #{member_id}, #{paymentPrice}, #{sender_name}, #{sender_address}, #{sender_postcode}, 
+				#{sender_tel}, #{recipient_name}, #{recipient_address}, #{recipient_postcode}, #{recipient_tel}, now(),
+				#{memo, jdbcType=VARCHAR}, #{payment_method}, #{circumstance})
+	</insert>
+
+	<!-- 8. 주문 상세 정보 생성 -->
+	<insert id="orderInfo_Details" parameterType="com.spring.dto.OrderDetailDTO">
+		insert into order_detail_table(order_idx, product_idx, amount)
+		
+								select #{order_idx}, product_idx, amount
+								from cart_table
+								where member_id = #{member_id}
+	</insert>
+
+	<!-- 9. 카트 비우기 (결제를 완료하면, 특정회원의 장바구니 안에있는 물건을 삭제한다.)-->
+	<delete id="emptyMyCart" parameterType="java.lang.String">
+		delete from cart_table where member_id = #{member_id}
+	</delete>
+
+	<!-- 10. 특정 회원의 결제목록 -->
+	<select id="orderPaymentList" parameterType="java.lang.String" resultType="com.spring.dto.OrderDTO">
+		select * from order_table where member_id = #{member_id}
+	</select>
+
+	<!-- 11. 상품테이블, 결제테이블, 결제상품상세보기 테이블 합쳐서 -->
+	<select id="allInformationAboutOrder" parameterType="java.lang.String" resultType="com.spring.dto.OrderListDTO">
+		select 
+			o.order_idx, o.paymentPrice, o.member_id, o.sender_name, 
+			o.sender_address, o.sender_postcode, o.sender_tel,
+			o.recipient_name, o.recipient_address, o.recipient_postcode,
+			o.recipient_tel, o.order_date, o.memo, o.payment_method,
+			d.order_detail_idx, d.amount, g.product_name, g.product_price,
+			g.product_img
+		from (order_table o) inner join (order_detail_table d) 
+		on (o.order_idx = d.order_idx)
+							inner join (product_table g)
+		on (d.product_idx = g.product_idx)
+		where o.order_idx = #{order_idx}
+	</select>
+
+</mapper>

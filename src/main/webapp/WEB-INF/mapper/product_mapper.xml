@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="product">
+
+	<!-- 1. 카테고리별로 상품을 전시한다.(게시판 메인화면과 유사) -->
+	<select id="getProductListByCategory" parameterType="java.lang.Integer" resultType="com.spring.dto.ProductDTO" >
+		select * from product_table where category_idx = #{category_idx}
+	</select>
+
+	<!-- 2. 상품상세정보본다.(글 하나 읽기) -->
+	<select id="getProductDetail" parameterType="java.lang.Integer" resultType="com.spring.dto.ProductDTO" >
+		select * from product_table where product_idx = #{product_idx}
+	</select>
+
+	<!-- 3. 상품등록(글쓰기) -->
+	<insert id="addProduct" parameterType="com.spring.dto.ProductDTO" >
+		insert into product_table(product_name, product_price, category_idx, storage_method, expiration_date, product_img)
+		values(#{product_name}, #{product_price}, #{category_idx}, #{storage_method}, #{expiration_date}, #{product_img})
+	</insert>
+
+	<!-- 4. 상품수정 -->
+	<update id="modify" parameterType="com.spring.dto.ProductDTO">
+     	update product_table 
+     	set category_idx = #{category_idx}, product_name = #{product_name}, product_price=#{product_price}, 
+			storage_method=#{storage_method}, expiration_date=#{expiration_date}, product_img=#{product_img}
+		where product_idx = #{product_idx}
+	</update>
+	
+	<!-- 5. 상품삭제 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+   		delete from product_table where product_idx = #{product_idx} 
+	</delete>
+	
+	<!-- 6. 상품추천(좋아요기능) -->
+	<update id="like" parameterType="java.lang.Integer">
+		update product_table set likeButton = likeButton + 1 where product_idx = #{product_idx}
+	</update>
+	
+	<!-- 7. 상품상세페이지 댓글 -->
+	<!-- 1) 댓글 목록 가져오기 -->
+	<select id="replyList" parameterType="java.lang.Integer" resultType="com.spring.dto.ProductReplyDTO">
+		select product_idx, product_reply_idx, product_replyer_id, p.member_name as product_replyer_name, 
+		product_reply_content, regdate
+		from product_reply_table r, panya_member_table p
+        where product_idx = #{product_idx} and r.product_replyer_id = p.member_id 
+	</select>
+
+	<!-- 2) 댓글 작성 -->
+	<insert id="replyWrite" parameterType="com.spring.dto.ProductReplyDTO">
+		insert into product_reply_table(product_idx, product_replyer_id, product_reply_content, regDate)
+								values(#{product_idx}, #{product_replyer_id}, #{product_reply_content, jdbcType=VARCHAR}, now())
+	</insert>
+   
+	<!-- 3) 댓글 삭제 (아작스)-->
+	<delete id="deleteProductReply" parameterType="java.lang.Integer">
+		delete from product_reply_table where product_reply_idx = #{product_reply_idx}
+	</delete>
+	
+	<!-- 2.대댓글 -->
+	<!-- 1) 대댓글 목록 가져오기 -->
+	<select id="takeReReplyList" parameterType="java.lang.Integer" resultType="com.spring.dto.ProductReReplyDTO">
+		select
+			rr.product_rereply_idx as product_rereply_idx,
+			rr.product_reply_idx as product_reply_idx,
+			rr.product_rereplyer_id as product_rereplyer_id,
+			p.member_name as product_rereplyer_name,
+			rr.product_rereply_content as product_rereply_content,
+			rr.regdate as regdate
+		from 
+			product_rereply_table rr, panya_member_table p, product_reply_table r
+        where 
+        	rr.product_reply_idx = r.product_reply_idx 
+        and rr.product_rereplyer_id = p.member_id
+        and rr.product_idx=#{product_idx}; 
+	</select>
+
+	<!-- 2) 대댓글 작성 -->
+	<insert id="writeReReply" parameterType="com.spring.dto.ProductReplyDTO">
+	insert into product_rereply_table(product_reply_idx, product_idx, product_rereplyer_id, product_rereply_content, regDate)
+				values(#{product_reply_idx}, #{product_idx}, #{product_rereplyer_id}, #{product_rereply_content, jdbcType=VARCHAR}, now()); 
+	</insert>
+
+	<!-- 3) 대댓글 삭제 (아작스)-->
+	<delete id="deleteProductReReply" parameterType="java.lang.Integer">
+		delete from product_rereply_table where product_rereply_idx = #{product_rereply_idx}
+	</delete>
+
+</mapper>

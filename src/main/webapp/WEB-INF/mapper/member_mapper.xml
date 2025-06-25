@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<!-- 1. 회원가입시 아이디 중복체크(Duplicate checking ID when signing up for membership) -->
+	<select id="checkID" resultType="java.lang.String" parameterType="java.lang.String">
+		select member_id from panya_member_table where member_id = #{member_id}
+	</select>
+
+	<!-- 2. 회원가입시 이메일 중복체크(Duplicate checking Email when signing up for membership) -->
+	<select id="checkEmail" resultType="java.lang.String" parameterType="java.lang.String">
+		select member_email from panya_member_table where member_email like CONCAT (#{member_email}, '%')
+	</select>
+
+	<!-- 3. 회원가입(Sign Up) -->
+	<insert id="addMemberInfo" parameterType="com.spring.dto.MemberDTO">
+		insert into panya_member_table(member_name, member_id, member_pw, member_email, member_tel, member_address, postcode, question, answer, registerDate)
+		values(#{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_tel}, #{member_address}, #{postcode}, #{question}, #{answer}, now())
+	</insert>
+
+	<!-- 4. Sign In (Log in) -->
+	<select id="getLoginMember" parameterType="com.spring.dto.MemberDTO" resultType="com.spring.dto.MemberDTO">
+		select * from panya_member_table where member_id = #{member_id} and member_pw = #{member_pw}
+	</select>
+
+	<!-- 5. 회원정보를 수정하기 위해서 DB에서 저장된 회원정보를 가져오기(Bringing membership information to modify membership information) -->
+	<select id="getModifyMemberDTO" parameterType="java.lang.Integer" resultType="com.spring.dto.MemberDTO">
+		select * from panya_member_table where member_idx = #{member_idx}
+	</select>
+
+	<!--6. 회원정보 수정하기(Modify the member's information) -->
+	<update id="modifyMemberInfo" parameterType="com.spring.dto.MemberDTO">
+		update panya_member_table
+		set 
+			member_pw=#{member_pw},
+			member_email=#{member_email},
+			member_tel=#{member_tel},
+			member_address=#{member_address}, 
+			question=#{question},
+			answer=#{answer},
+			postcode = #{postcode}
+		where
+			member_idx=#{member_idx}
+	</update>
+
+	<!-- 7. 회원탈퇴 기능 -->
+	<delete id="delete" parameterType="com.spring.dto.MemberDTO">
+ 		delete from panya_member_table where member_id = #{member_id} and member_pw = #{member_pw}
+	</delete>
+
+	<!-- 8. 잃어버린 아이디를 찾는 기능 -->
+	<select id="find_id" parameterType="java.lang.String" resultType="java.lang.String">
+		select member_id from panya_member_table where member_email = #{member_email}
+	</select>
+
+	<!-- 9. 비번찾는단계 -->
+	<!-- 1) 회원가입시 입력한 질문을 얻기 -->
+	<select id="find_question" parameterType="java.lang.String" resultType="com.spring.dto.MemberDTO">
+		select member_id, question from panya_member_table where member_id = #{member_id}
+	</select>
+
+	<!-- 2) 회원가입시 입력한 답을 제출하여 비번찾기(로그인과 형태유사? ) -->
+	<select id="find_password" parameterType="com.spring.dto.MemberDTO" resultType="com.spring.dto.MemberDTO">
+		select * from panya_member_table where answer = #{answer} and member_id = #{member_id}
+	</select>
+
+</mapper>
