@@ -4,7 +4,7 @@ public class BoardDTO {
 
 	private int board_idx;
 	private String board_name;
-	
+
 	public int getBoard_idx() {
 		return board_idx;
 	}
@@ -17,5 +17,5 @@ public class BoardDTO {
 	public void setBoard_name(String board_name) {
 		this.board_name = board_name;
 	}
-	
+
 }

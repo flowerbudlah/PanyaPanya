@@ -64,10 +64,58 @@
 	opacity: 1;
 	pointer-events: auto;
 }
+
+/* 기본: 버튼 숨김 (PC 화면) */
+.close-btn {
+    display: none;
+}
+
+/* 화면이 768px 이하일 때만 표시 (태블릿/모바일) */
+@media (max-width: 768px) {
+
+	 .close-btn {
+	 	color: white;
+        display: block;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        font-size: 50px;
+        background-color: transparent;
+        border: none;
+        border-radius: `0px;
+        padding: 0px 5px 5px 5px;
+        cursor: pointer;
+        z-index: 9999;
+    }
+
+	/* 마우스 올렸을 때 */
+	.close-btn:hover {
+    	background-color: transparent;
+    	transform: scale(1.05);
+	}
+
+	/* 클릭했을 때 */
+	.close-btn:active {
+    	transform: scale(0.95);
+	}
+
+}
 </style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const menuItems = document.querySelectorAll("#mobileMenu > li");
+
+    menuItems.forEach(item => {
+        item.addEventListener("click", function (e) {
+            this.classList.toggle("open");
+        });
+    });
+});
+</script>
 </head>
 <body>
-	<ul class="main">
+	<ul class="main" id="mobileMenu">
+	<button type="button" class="close-btn" onclick="msg();">X</button>
 		<li>상품소개
 			<ul>
 				<li>

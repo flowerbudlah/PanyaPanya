@@ -38,8 +38,7 @@ public class BoardController {
 
 	// 1. 게시글들이 목록으로 나열된 게시판 메인화면으로 간다. (Going to the main board where posts are listed.)
 	@GetMapping("/main")
-	public String main(@RequestParam("board_idx") int board_idx,
-			@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+	public String main(@RequestParam("board_idx") int board_idx, @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 		model.addAttribute("board_idx", board_idx);
 		String board_name = boardService.getBoardName(board_idx);
 		model.addAttribute("board_name", board_name);

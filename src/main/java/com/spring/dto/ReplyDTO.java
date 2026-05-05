@@ -46,6 +46,6 @@ public class ReplyDTO {
 	}
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
-	}
+	}	
 
 }

@@ -8,6 +8,10 @@ public class ProductReplyDTO {
 	private int product_idx;
 	private String product_reply_content;
 	private String product_replyer_id;
+	private Date regdate;
+	private String product_replyer_name;
+	private String result;
+
 	public int getProduct_reply_idx() {
 		return product_reply_idx;
 	}
@@ -50,8 +54,5 @@ public class ProductReplyDTO {
 	public void setResult(String result) {
 		this.result = result;
 	}
-	private Date regdate;
-	private String product_replyer_name;
-	private String result;
 
 }

@@ -12,6 +12,7 @@ public class ProductReReplyDTO {
 	private String product_rereplyer_name;
 	private Date regdate;
 	private String result;
+
 	public int getProduct_rereply_idx() {
 		return product_rereply_idx;
 	}
@@ -60,4 +61,5 @@ public class ProductReReplyDTO {
 	public void setResult(String result) {
 		this.result = result;
 	}
+
 }
