@@ -28,15 +28,6 @@
 				<configuration>
 					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<webResources>
-						<resource>
-							<directory>src/main/webapp</directory>
-							<targetPath>/</targetPath>
-							<includes>
-								<include>**/*.jsp</include>
-							</includes>
-						</resource>
-					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -177,14 +168,14 @@
 		</dependency>
 
 
-		
+
 		<!-- Source: https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-<dependency>
-    <groupId>org.projectlombok</groupId>
-    <artifactId>lombok</artifactId>
-    <version>1.18.46</version>
-    <scope>compile</scope>
-</dependency>
-    
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.46</version>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 </project>
