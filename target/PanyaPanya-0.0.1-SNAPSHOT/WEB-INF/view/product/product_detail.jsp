@@ -321,7 +321,7 @@ ul {
 			</table>
 			<br><br><br>
 			<!-- Recommending Function -->
-			<a href="${root }product/product_detail?product_idx=${product_idx}" onclick="javascript:like();">
+			<a onclick="javascript:like();">
 				<img src="${root }image/like.gif" width=100px;><br>이 상품을 <strong>추천</strong>하시겠습니까?
 			</a><br>
 			<strong>★${productDetail.likeButton }★</strong>
@@ -400,7 +400,7 @@ ul {
 				<button onclick="history.go(-1);" class="btn btn-info btn-sm">이전 페이지로 돌아가기</button>
 				<c:choose>
 					<%-- 관리자가 로그인을 한 경우만 이 버튼이 보이도록 한다. (상품 정보수정과 삭제는 관리자만 가능하도록 한다. ) 
-					Making these buttons visible only when the administrator signs in. Only the administrator can edit  the product information and delete the product. --%>
+					Making these buttons visible only when the administrator signs in. Only the administrator can edit the product information and delete the product. --%>
 					<c:when test="${loginMemberDTO.member_id eq 'admin'}">
 						<a href="${root }product/modify?category_idx=${productDetail.category_idx}&product_idx=${productDetail.product_idx}" class="btn btn-primary btn-sm" style="color: white">해당상품 정보수정하기</a>
 						<a href="${root }product/delete?category_idx=${productDetail.category_idx}&product_idx=${productDetail.product_idx}" class="btn btn-secondary btn-sm" style="color: white">해당상품 삭제하기</a>
@@ -410,6 +410,6 @@ ul {
 			</div>
 		</div>
 	</div>
-<c:import url="/WEB-INF/view/include/bottom_info.jsp" />
+<c:import url="/WEB-INF/view/include/bottom_info.jsp"/>
 </body>
 </html>
